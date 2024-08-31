@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { calendarEventsAtom } from '../../data/Store/eventStore';
+import { calendarEventsAtom } from '/src/data/Store/eventStore.js';
 
 const useUpdateJotai = () => {
   const [calendarEvents, setCalendarEvents] = useAtom(calendarEventsAtom);
@@ -8,7 +8,6 @@ const useUpdateJotai = () => {
     const selectedEvent = calendarEvents?.events?.find(
       (event) => event.gameid === Number(targetGameId)
     );
-
     if (!selectedEvent) {
       console.log(`No se encontró ningún evento con gameid: ${targetGameId}`);
     }
@@ -21,7 +20,7 @@ const useUpdateJotai = () => {
       );
 
       if (updatedEvents.length === currentState.events.length) {
-        console.log(`No se encontró evento con gameid:`, gameId);
+        console.log(`No se encontró evento con gameid: ${gameId}`);
         return currentState;
       }
 

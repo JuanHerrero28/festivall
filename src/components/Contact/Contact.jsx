@@ -1,89 +1,163 @@
-import Styles from './Contact.module.css';
-import emailjs from 'emailjs-com';
+import * as React from "react";
+import {
+  useId,
+  Button,
+  Toaster,
+  useToastController,
+  Toast,
+  ToastTitle,
+  ToastBody,
+} from "@fluentui/react-components";
+import {
+  DialogTitle,
+  DialogContent,
+  DialogBody,
+  DialogActions,
+  Input,
+  Label,
+  makeStyles,
+} from "@fluentui/react-components";
+import emailjs from "emailjs-com";
+
+const useStyles = makeStyles({
+  overlay: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "100vh",
+    padding: "20px",
+    boxSizing: "border-box",
+    overflow: "auto",
+  },
+  dialog: {
+    maxWidth: "600px",
+    width: "100%",
+    height: "auto",
+    maxHeight: "90%",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    borderRadius: "8px",
+    backgroundColor: "#ffffff",
+    padding: "35px",
+    boxShadow: "0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 12px rgba(0, 0, 0, 0.1)",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: "10px",
+    width: "100%",
+    boxSizing: "border-box",
+  },
+});
 
 const Contacto = () => {
+  const styles = useStyles();
+  const toasterId = useId("toaster");
+  const { dispatchToast } = useToastController(toasterId);
+
+  const notifySuccess = () =>
+    dispatchToast(
+      <Toast appearance="primary">
+        <ToastTitle style={{ color: '#5B5FC7' }}>Email enviado</ToastTitle>
+        <ToastBody style={{ color: '#5B5FC7' }}>
+          ¡Tu mensaje se ha enviado correctamente!
+        </ToastBody>
+      </Toast>,
+      { intent: "success" }
+    );
+
+  const notifyError = () =>
+    dispatchToast(
+      <Toast appearance="primary">
+        <ToastTitle>Error</ToastTitle>
+        <ToastBody>
+          Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo
+          más tarde.
+        </ToastBody>
+      </Toast>,
+      { intent: "error" }
+    );
+
+  const formRef = React.useRef();
+
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
       .sendForm(
-        'service_di6xjep',
-        'template_rzmruld',
-        e.target,
-        'ZAPktphb4_mUEdgNy'
+        "service_di6xjep",
+        "template_rzmruld",
+        formRef.current,
+        "ZAPktphb4_mUEdgNy"
       )
       .then((response) => {
-        'Email enviado:', response;
-        alert('¡Tu mensaje se ha enviado correctamente!');
+        console.log("Email enviado:", response);
+        notifySuccess();
+        formRef.current.reset();
       })
       .catch((error) => {
-        console.error('Error al enviar el email:', error);
-        alert(
-          'Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.'
-        );
+        console.error("Error al enviar el email:", error);
+        notifyError();
       });
-
-    e.target.reset();
   };
 
   return (
-    <div className={Styles.granContenedor}>
-      <div className={Styles.contenedor}>
-        <div className={Styles.contenedor1}>
-          <h2>¡Contáctanos!</h2>
-          <p>
-            ¿Tienes alguna pregunta o comentario? ¿Quieres formar parte de
-            nuestro equipo? No dudes en contactarnos.
-          </p>
-          <p>
-            <b>Dirección:</b> Sherman calle Wallaby 42 Sydney
-          </p>
-          <p>
-            <b>Teléfono:</b> +57 123 456 7890
-          </p>
-          <p>
-            <b>Correo electrónico:</b> festivall.vivelaemocion@gmail.com
-          </p>
-        </div>
-
-        <div className={Styles.contenedor2}>
-          <h2>Envíanos un mensaje</h2>
-          <form className={Styles.formContact} onSubmit={sendEmail}>
-            <label>
-              Nombre:
-              <input
-                type='text'
-                name='from_name'
+    <div className={styles.overlay}>
+      <div className={styles.dialog}>
+        <Toaster toasterId={toasterId} />
+        <form ref={formRef} onSubmit={sendEmail}>
+          <DialogBody>
+            <DialogTitle>Envíanos un mensaje</DialogTitle>
+            <DialogContent className={styles.content}>
+              <Label required htmlFor={"name-input"}>
+                Nombre
+              </Label>
+              <Input
                 required
-                style={{ padding: '5px', margin: '5px 0' }}
+                type="text"
+                id={"name-input"}
+                name="from_name"
+                style={{ height: "40px" }}
               />
-            </label>
-            <br />
-            <label>
-              Correo electrónico:
-              <input
-                type='email'
-                name='to_email'
+              <Label required htmlFor={"email-input"}>
+                Correo electrónico
+              </Label>
+              <Input
                 required
-                style={{ padding: '5px', margin: '5px 0' }}
+                type="email"
+                id={"email-input"}
+                name="to_email"
+                style={{ height: "40px" }}
               />
-            </label>
-            <br />
-            <label>
-              Mensaje:
-              <textarea
-                name='message_html'
+              <Label required htmlFor={"message-input"}>
+                Mensaje
+              </Label>
+              <Input
+                as="textarea"
                 required
-                style={{ padding: '10px', margin: '5px 0' }}
+                id={"message-input"}
+                name="message_html"
+                style={{ height: "150px" }}
               />
-            </label>
-            <br />
-            <button type='submit'>Enviar mensaje</button>
-          </form>
-        </div>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                type="submit"
+                appearance="primary"
+                style={{ marginTop: "25px", height: "40px" }}
+                
+              >
+                Enviar mensaje
+              </Button>
+            </DialogActions>
+          </DialogBody>
+        </form>
       </div>
     </div>
   );
 };
 
 export default Contacto;
+
+
+

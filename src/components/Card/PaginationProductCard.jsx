@@ -8,6 +8,9 @@ const PaginationProductCard = ({ products, itemsPerPage }) => {
   const [inputPage, setInputPage] = useState('');
 
   const renderProducts = () => {
+    if (!Array.isArray(products)) {
+      return <div>No products available</div>;
+    }
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return products.slice(startIndex, endIndex).map(product => (

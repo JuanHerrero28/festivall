@@ -1,95 +1,98 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { HiOutlineShare, HiHeart, HiOutlineHeart } from 'react-icons/hi'; // Importa los íconos de corazón
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { HiOutlineShare, HiHeart, HiOutlineHeart } from "react-icons/hi";
 
 import {
   Popover,
   PopoverTrigger,
   PopoverSurface,
-} from '@fluentui/react-components';
-import { useAuth } from '../AuthContext/AuthContext';
-import ShareSocial from '../ShareSocial/ShareSocial';
-import '@fontsource/capriola';
-import { Rating as FluentRating } from '@fluentui/react-components';
-import { useNavigate } from 'react-router-dom';
-import useRatingStore from '../Rating/useRatingStore';
-import { Button } from '@fluentui/react-components';
+} from "@fluentui/react-components";
+import { useAuth } from "../AuthContext/AuthContext";
+import ShareSocial from "../ShareSocial/ShareSocial";
+import { Rating as FluentRating } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
+import useRatingStore from "../Rating/useRatingStore";
+import { Button } from "@fluentui/react-components";
 
 const CardContainer = styled.div`
-  position: relative;
-  width: 300px;
-  height: 400px;
-  background: linear-gradient(127deg, #ed00ff26 0%, #795af63d 100%);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  border-radius: 8px;
-  border: 8px solid white;
-`;
-
-const ContentContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   display: flex;
-  align-items: flex-end;
-  padding: 24px;
-  box-sizing: border-box;
-  z-index: 1;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(0 0, 100% 0, 74% 100%, 0 70%);
-    background-color: rgba(255, 255, 255, 0.1);
-    z-index: -1;
+  align-items: center;
+  width: 390px;
+  height: 270px;
+  background: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 8px solid white;
+  position: relative;
+  @media (max-width: 768px) {
+    width: 500px;
+    height: 220px;
   }
 `;
 
 const ImageWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  flex-shrink: 0;
+  width: 240px;
   height: 100%;
-  clip-path: polygon(0 0, 100% 0, 74% 100%, 0 70%);
   overflow: hidden;
-  z-index: 0;
+  position: relative;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: filter 0.3s ease;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5e9fc; /* Color deseado */
+    mix-blend-mode: multiply; /* Mezcla el color con la imagen */
+    opacity: 0.7; /* Ajusta la opacidad según sea necesario */
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover:before {
+    opacity: 0; /* Elimina el filtro al pasar el cursor */
+  }
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 200px; /* Ajusta la altura si es necesario */
   }
 `;
 
 const TextContainer = styled.div`
-  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 16px;
-  max-width: 90%;
-  z-index: 1;
+  gap: 9px;
+  flex: 1;
   line-height: 1.2;
-  border-radius: 20px;
+  text-align: center;
 `;
 
 const Title = styled.h3`
   margin: 0;
-  font-family: 'Capriola', sans-serif;
-  font-size: 35px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
   color: #333;
 `;
 
 const DetailLink = styled(Link)`
   margin-top: 16px;
-  font-size: 16px;
+  font-size: 14px;
   color: #795af6;
   text-decoration: none;
+  font-family: "Roboto", sans-serif;
   transition: color 0.3s ease;
 
   &:hover {
@@ -99,7 +102,7 @@ const DetailLink = styled(Link)`
 
 const ShareIconWrapper = styled.div`
   position: absolute;
-  bottom: 16px;
+  top: 16px;
   right: 16px;
   color: #795af6;
   cursor: pointer;
@@ -121,11 +124,11 @@ const ShareIconWrapper = styled.div`
 const FavoriteIconWrapper = styled.div`
   position: absolute;
   top: 16px;
-  right: 16px;
+  left: 16px;
   cursor: pointer;
   color: #ff00ff;
   z-index: 1;
-  font-size: 30px;
+  font-size: 28px;
   svg {
     stroke-width: 1px;
   }
@@ -136,6 +139,24 @@ const RatingWrapper = styled.div`
   align-self: center;
   user-select: none;
   pointer-events: none;
+  font-size: 14px;
+`;
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 16px;
+  left: 83%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    bottom: 12px; /* Ajusta la distancia desde el borde inferior */
+    left: 80%;
+    transform: translateX(-50%);
+    width: auto; /* Ajusta el ancho del botón */
+  }
 `;
 
 const ProductCard = ({ product }) => {
@@ -143,13 +164,12 @@ const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // Verificar si el producto está marcado como favorito al cargar el componente
     setIsFavorite(favorites.includes(product.id));
   }, [product.id, favorites]);
 
   const toggleFavorite = () => {
     if (!isAuthenticated) {
-      ('Redireccionar al inicio de sesión...');
+      // Redireccionar al inicio de sesión...
       return;
     }
 
@@ -164,7 +184,8 @@ const ProductCard = ({ product }) => {
   if (!product) {
     return <div>No hay información del producto</div>;
   }
-  const { id, nombre, img_url, promedioValoracion } = product;
+
+  const { id, nombre, img_urls, promedioValoracion } = product;
 
   const navigate = useNavigate();
   const setJuegoId = useRatingStore((state) => state.setJuegoId);
@@ -172,43 +193,41 @@ const ProductCard = ({ product }) => {
     setJuegoId(id);
     navigate(`/detalle/${id}`);
   };
+
   const averageRating = promedioValoracion;
+
   return (
     <>
       <CardContainer>
         <ImageWrapper>
-          <img src={img_url} alt={nombre} />
+          <img src={img_urls[0]} alt={nombre} />
         </ImageWrapper>
-        <ContentContainer>
-          <TextContainer>
-            <Title>{nombre}</Title>
-            <RatingWrapper>
-              <FluentRating value={averageRating} readOnly />
-            </RatingWrapper>
-            <Button appearance='primary' onClick={handleDetalle}>
-              {' '}
+        <TextContainer>
+          <Title>{nombre}</Title>
+          <RatingWrapper>
+            <FluentRating size="medium" value={averageRating} readOnly />
+          </RatingWrapper>
+          <ButtonWrapper>
+            <Button appearance="primary" onClick={handleDetalle}>
               Ver Detalle
             </Button>
-          </TextContainer>
-        </ContentContainer>
+          </ButtonWrapper>
+        </TextContainer>
         <Popover withArrow>
           <PopoverTrigger disableButtonEnhancement>
             <ShareIconWrapper>
               <HiOutlineShare />
             </ShareIconWrapper>
           </PopoverTrigger>
-
           <PopoverSurface tabIndex={-1}>
-            {<ShareSocial imageUrl={img_url} />}
+            <ShareSocial imageUrl={img_urls[0]} />
           </PopoverSurface>
         </Popover>
-
-        {/* Agrega el botón de favoritos y maneja el estado de favorito */}
         <FavoriteIconWrapper onClick={toggleFavorite}>
           {isFavorite ? (
-            <HiOutlineHeart style={{ fill: '#D81B60', stroke: '#5B5FC7' }} />
+            <HiOutlineHeart style={{ fill: "#D81B60", stroke: "#5B5FC7" }} />
           ) : (
-            <HiHeart style={{ fill: 'none' }} />
+            <HiHeart style={{ fill: "none" }} />
           )}
         </FavoriteIconWrapper>
       </CardContainer>

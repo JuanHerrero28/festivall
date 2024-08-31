@@ -1,67 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import styles from './DetailProduct.module.css';
 import { IoIosArrowBack } from 'react-icons/io';
-import Modal from '../Modal/Modal';
-import GalleryImgs from '../GalleryImgs/GalleryImgs';
-import useModalStore from '../Modal/useModalStore';
-import styled from 'styled-components';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { FaCircle } from 'react-icons/fa';
-import useDetailProduct from './useDetailProduct';
 import { Spinner } from '@fluentui/react-components';
-import Rating from '../Rating/Rating';
-import Politicas from '../Politicas/Politicas';
-import usePoliticasStore from '../Politicas/usePoliticasStore';
+import { obtenerProductoPorId } from '../../data/juegos';
+import styles from './DetailProduct.module.css';
 import Scheduler from '../Calendar/Scheduler';
-
-export const Button = styled.button`
-  margin-top: 15%;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-export const MoreButton = styled(Button)`
-  background-color: #795af6;
-  color: #fff;
-`;
-
-export const PoliticasButton = styled(Button)`
-  background-color: orange;
-  color: #fff;
-  margin-left: 5px;
-`;
 
 const DetailProduct = () => {
   const { id } = useParams();
-  const { isModalOpen, openModal, closeModal } = useModalStore();
-  const { isPoliticasOpen, openPoliticas, closePoliticas } =
-    usePoliticasStore();
-  const { data: product, isLoading, error } = useDetailProduct(id);
-  const [politicas, setPoliticas] = useState([]);
+  const [producto, setProducto] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
-    if (error) {
-      toast.error('Error al cargar la data');
-    }
-  }, [error]);
+    const fetchProducto = async () => {
+      try {
+        const data = await obtenerProductoPorId(parseInt(id));
+        setProducto(data);
+        setSelectedImage(data.img_urls[0]); // Imagen principal inicial
+        setLoading(false);
+      } catch (error) {
+        console.error('Error al obtener el producto:', error);
+        setLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    if (isPoliticasOpen) {
-      fetch(`https://sunny-exploration-production.up.railway.app/api/politicas/juego/${id}`)
-        .then((response) => response.json())
-        .then((data) => setPoliticas(data))
-        .catch((error) => {
-          console.error('Error fetching politicas:', error);
-          toast.error('Error al cargar las políticas');
-        });
-    }
-  }, [isPoliticasOpen, id]);
+    fetchProducto();
+  }, [id]);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className={styles.spinnerContainer}>
         <Spinner appearance='primary' label='Cargando detalle...' />
@@ -69,66 +37,65 @@ const DetailProduct = () => {
     );
   }
 
-  if (!product) {
-    return null;
+  if (!producto) {
+    return <div>No se encontró el producto.</div>;
   }
 
   return (
-    <div className={styles.detailContainer}>
+    <div className={styles.detailProduct}>
       <div className={styles.productHeader}>
-        <h1 className={styles.productTitle}>{product?.nombre}</h1>
+        <h1 className={styles.productTitle}>{producto.nombre}</h1>
         <Link to='/' className={styles.goBack}>
           <IoIosArrowBack color='white' size={40} />
         </Link>
       </div>
-      <div className={styles.productBody}>
-        <div className={styles.productDescription}>
-          <p>{product?.descripcion}</p>
-          <MoreButton onClick={openModal}>Ver más</MoreButton>
-          <PoliticasButton onClick={openPoliticas}>
-            Ver políticas
-          </PoliticasButton>
-        </div>
-        <div className={styles.productImage}>
-          <img src={product?.img_url} alt={product?.nombre} />
-          <Rating
-            promedioValoracion={product ? product.promedioValoracion : 0}
+      <div className={styles.contentDos}>
+
+      <div className={styles.productContent}>
+        <div className={styles.imagesBlock}>
+          <img 
+            src={selectedImage} 
+            alt={producto.nombre} 
+            className={styles.mainImage} 
           />
+          <div className={styles.thumbnailContainer}>
+            {producto.img_urls.map((url, index) => (
+              <img 
+                key={index} 
+                src={url} 
+                alt={`${producto.nombre} thumbnail ${index}`} 
+                className={`${styles.thumbnail} ${selectedImage === url ? styles.activeThumbnail : ''}`} 
+                onClick={() => setSelectedImage(url)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className={styles.schedulerBlock}>
+        <Scheduler selectedGameId={producto.id} selectedGameName={producto.nombre} selectedCantidad={producto.cantidad} />
         </div>
       </div>
-      <Scheduler />
-      <div className={styles.contCarac}>
-        <div className={styles.productCharacteristics}>
-          {product?.caracteristicas.map((caracteristica, index) => (
-            <div key={index} className={styles.characteristic}>
-              <div className={styles.characteristicItem}>
-                <FaCircle color='#f5e9fc' size={10} />
-                <p>{caracteristica.nombre}</p>
-              </div>
-            </div>
-          ))}
-        </div>       
       </div>
-      <Politicas>
-          {politicas.length > 0 ? (
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              {politicas.map((politica, index) => (
-                <div className='policy-column' key={index}>
-                  <h4>{politica.titulo}</h4>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: politica.descripcion }}
-                  />
+      <div className={styles.contentDescription}>
+
+      <div className={styles.productDescription}>
+       
+          <p className={styles.description}>{producto.descripcion}</p>
+        
+        </div>
+      </div>
+          <div className={styles.contentCaract}>
+          <div className={styles.productCharacteristics}>
+            {producto.caracteristicas.map((caracteristica, index) => (
+              <div key={index} className={styles.characteristic}>
+                <div className={styles.characteristicItem}>
+                  <FaCircle color='#f5e9fc' size={10} />
+                  <p>{caracteristica}</p>
                 </div>
-              ))}
-            </div>
-          ) : (
-            'Cargando políticas...'
-          )}
-        </Politicas>
-      <Modal>
-        <GalleryImgs />
-      </Modal>
-      <ToastContainer position='top-center' />
+              </div>
+            ))}
+          </div> 
+
+          </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import ProductCard from "../Card/ProductCard";
 import styles from "./FavoritesList.module.css";
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@fluentui/react-components";
+import { obtenerProductos } from "../../data/juegos";
 
 const FavoritesList = () => {
   const { isAuthenticated, favorites } = useAuth();
@@ -15,11 +16,7 @@ const FavoritesList = () => {
     // Fetch all products once and store them
     const fetchProducts = async () => {
       try {
-        const response = await fetch("https://sunny-exploration-production.up.railway.app/api/juegos");
-        if (!response.ok) {
-          throw new Error("No hay conexión");
-        }
-        const data = await response.json();
+        const data = await obtenerProductos(); 
         setAllProducts(data);
       } catch (error) {
         console.error("No se pueden obtener datos:", error);
@@ -78,4 +75,3 @@ const FavoritesList = () => {
 };
 
 export default FavoritesList;
-

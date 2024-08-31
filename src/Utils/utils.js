@@ -1,4 +1,8 @@
 export const getObjetWorlds = (cadena) => {
+  if (!cadena) {
+    return {};
+  }
+
   const palabras = cadena.trim().split(/\s+/);
 
   if (palabras.length === 1) {
@@ -11,3 +15,4 @@ export const getObjetWorlds = (cadena) => {
 
   return resultado;
 };
+

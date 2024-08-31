@@ -21,10 +21,10 @@ import {
   MessageBarBody,
 } from "@fluentui/react-components";
 import { useAtom } from "jotai";
-import { calendarEventsAtom } from "../../data/Store/eventStore";
+import { calendarEventsAtom, confirmedReservationsAtom } from "../../data/Store/eventStore";
 import { useId } from "react";
 import { Link } from "react-router-dom";
-import { postReservation } from "../../data/juegos";
+
 
 const useStyles = makeStyles({
   root: {
@@ -126,6 +126,7 @@ const ReservationsDetail = () => {
   const [user, setUser] = useState(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [isReservationConfirmed, setReservationConfirmed] = useState(false);
+  const [confirmedReservations, setConfirmedReservations] = useAtom(confirmedReservationsAtom);
   const [isSubmitting, setSubmitting] = useState(false);
   const toasterId = useId();
   const { dispatchToast } = useToastController(toasterId);
@@ -146,37 +147,35 @@ const ReservationsDetail = () => {
   };
 
   const handleConfirm = async () => {
-    console.log(`Reserva confirmada para el usuario con ID: ${user.userId}`);
     setSubmitting(true);
-
+  
     const reservationData = {
       nombre: user.name,
-      apellido: "Castro",
       email: user.email,
       reservasDTO: user.events.map((event) => ({
         tituloJuego: event.title,
         fechaInicio: formatDateAMD(event.start),
         fechaFin: formatDateAMD(event.end),
-        cantidad: event.quantity || 1,
+        cantidad: event.quantity,
       })),
     };
-
-    console.log('Datos de reservationData con fechas formateadas:', reservationData);
-
+  
     try {
-      const response = await postReservation(reservationData);
-      console.log('Respuesta del servidor:', response);
-
-      setDialogOpen(false);
-      dispatchToast(
-        <Toast>
-          <ToastTitle>Reserva Confirmada</ToastTitle>
-          <ToastBody>La reserva ha sido confirmada exitosamente.</ToastBody>
-        </Toast>,
-        { intent: "success" }
-      );
-
-      setReservationConfirmed(true);
+      // Simula la respuesta como si fuera un servidor
+      setTimeout(() => {
+        setConfirmedReservations((prevReservations) => [...prevReservations, reservationData]);
+  
+        setDialogOpen(false);
+        dispatchToast(
+          <Toast>
+            <ToastTitle>Reserva Confirmada</ToastTitle>
+            <ToastBody>La reserva ha sido confirmada exitosamente.</ToastBody>
+          </Toast>,
+          { intent: "success" }
+        );
+  
+        setReservationConfirmed(true);
+      }, 1000); // Simula un retraso
     } catch (error) {
       dispatchToast(
         <Toast>
@@ -283,12 +282,13 @@ const ReservationsDetail = () => {
               </DialogContent>
               <DialogActions>
                 <Button onClick={() => setDialogOpen(false)}>Cancelar</Button>
+                {isSubmitting && <Spinner size="small" />}
                 <Button
                   appearance="primary"
                   onClick={handleConfirm}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? <Spinner size="small" /> : "Confirmar"}
+                  Confirmar
                 </Button>
               </DialogActions>
             </DialogBody>

@@ -1,9 +1,9 @@
 [
-    {
-      "titulo": "Inflables",
-      "descripcion": "Juegos inflables de diferentes tamaños.",
-      "imagen": "url_a_la_imagen_inflables"
-    },
+     {
+        "title": "Inflables y Castillos",
+        "description": "Juegos inflables para todas las edades",
+        "img_url": "../public/assets/inflables.jpg"
+      },
     {
       "titulo": "Agua",
       "descripcion": "Juegos acuáticos para refrescarte.",

@@ -110,10 +110,9 @@ const CardFeatured = ({ product }) => {
   return (
     <Card className={styles.productCard}>
       <CardPreview>
-        <img src={product.img_url} alt={product.nombre} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+        <img src={product.img_urls[0]} alt={product.nombre} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
       </CardPreview>
       <CardHeader
-        image={<img src={product.img_url} width="32px" height="32px" alt={product.nombre} />}
         header={<p style={{ fontSize: "17px", textAlign: 'left' }}>{product.nombre}</p>}
         className={styles.cardHeader}
       />
@@ -129,7 +128,7 @@ const CardFeatured = ({ product }) => {
           </ShareIconWrapper>
         </PopoverTrigger>
         <PopoverSurface tabIndex={-1}>
-          <ShareSocial imageUrl={product.img_url} />
+          <ShareSocial imageUrl={product.img_urls[0]} />
         </PopoverSurface>
       </Popover>
     </Card>

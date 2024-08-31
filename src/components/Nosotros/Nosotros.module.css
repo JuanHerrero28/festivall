@@ -1,113 +1,32 @@
-
-.nosotros {    
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.container1 h1 {
+  font-size: 2.5rem; /* Tamaño de fuente grande para el título */
+  color: #795af6;
+  padding: 80px;
+  text-align: center;
 }
 
-.info{ 
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(247, 247, 247);
-    width: 90%; 
-    max-width: 1200px; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-     border-radius: 10px;
-    gap: 40px;
-    margin: 0 auto;
-    padding: 20px;
-    }
-
-.info h1{
-    font-family: 'Segoe UI';
-    font-size: 40px;
-    font-weight: 400;
-    margin-bottom: 30px;
-    margin-top: 30px;
-    line-height: 1.0;   
+.container1 p {
+  font-size: 1rem; /* Tamaño de fuente más grande para el texto del párrafo */
+  line-height: 1.6; /* Espaciado entre líneas para mejorar la legibilidad */
+  margin: 0 auto;
+  padding: 50px;
+  text-align: center;
+  color: #795af6;
 }
 
-.nosotros p{
-    font-family: 'Segoe UI';
-    font-weight: 400;
-    text-align: justify; 
-    width: 90%;
-    margin: 0 auto; 
-    
-   }
-
-.container1{
-    text-align: center;
-    width: 100%;
-}
-
-.teamContainer {
-    display: flex;
-  flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    
-    margin-bottom: 30px;
-   }
-
-.teamContainer h2{
- margin-top: 10px;
-    font-family: 'Segoe UI';
-    font-weight: 300, bold;
-    font-size: 20px;
-}
-.teamContainer p{
-  margin-top: 10px;
-    text-align: center;   
-}
-.teamMember {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center;
-    align-items: center; 
-    width: 150px;
-    text-align: center;
-    padding: 15px; 
- }
-
-.memberPhoto {
-    width: 100px;
-    border-radius: 50%;
-    height: 100px;
-    object-fit: cover;
+.teamDiagram {
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
-    .nosotros {
-        flex-direction: column; 
-        height: auto; 
-        padding: 20px;
-    }
+  .container1 h1 {
+    font-size: 1.75rem;
+    padding: 40px;
+  }
 
-    .info {
-        flex-direction: column;
-        width: 100%; 
-        height: auto; 
-        padding: 20px; 
-    }
-
-    .container1 {
-        width: 100%; 
-        margin-bottom: 20px; 
-    }
-
-    .teamContainer {
-        width: 100%; 
-        flex-direction: column;
-    
-    }
-
-    .teamMember {
-        width: 100%; 
-        margin-bottom: 20px;    
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+  .container1 p {
+    font-size: 0.875rem; /* Tamaño de fuente más pequeño para el párrafo en móviles */
+    padding: 20px; /* Reducir el padding en pantallas más pequeñas */
+  }
 }

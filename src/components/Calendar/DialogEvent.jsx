@@ -10,11 +10,7 @@ import {
   Label,
   makeStyles,
 } from '@fluentui/react-components';
-import ComboGames from './ComboGames';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
-import { useAtom } from 'jotai';
-import { calendarEventsAtom } from '../../data/Store/eventStore';
-import { userGamesAtom } from '../../data/Store/gamesStore';
 
 const useStyles = makeStyles({
   content: {
@@ -28,24 +24,22 @@ const DialogEvent = ({
   eventToEdit,
   setIsDialogOpen,
   handleDialogSubmit,
+  handleDeleteEvent, // Añadido aquí
   isNewEvent,
-  currentUser,
+  selectedGameId,
+  selectedGameName,
+  stock,
 }) => {
   const styles = useStyles();
   const [start, setStart] = React.useState(eventToEdit?.start || null);
   const [end, setEnd] = React.useState(eventToEdit?.end || null);
+  const [quantity, setQuantity] = React.useState(eventToEdit?.quantity || 1);
   const Today = new Date();
-  const minDate = new Date(
-    Today.getFullYear(),
-    Today.getMonth(),
-    Today.getDate()
-  );
+  const minDate = new Date(Today.getFullYear(), Today.getMonth(), Today.getDate());
 
   const isDateDisabled = (date) => {
     return date < new Date(new Date().setHours(0, 0, 0, 0));
   };
-  
-  const [userGames] = useAtom(userGamesAtom);
 
   React.useEffect(() => {
     setStart(eventToEdit?.start || null);
@@ -56,77 +50,25 @@ const DialogEvent = ({
     setIsDialogOpen(false);
   };
 
-  const [ , setCalendarEvents] = useAtom(calendarEventsAtom);
-
-  const saveToJotai = (userEvents) => {
-    setCalendarEvents(userEvents);
-    console.log('Guardado en Jotai', JSON.stringify(userEvents, null, 2));
-  };
-
-  const generateEventsFromUserGames = () => {
-    const events = [];
-
-    userGames.forEach((game) => {
-      const eventid = isNewEvent ? Date.now() : eventToEdit.id;
-      const newEvent = isNewEvent
-        ? {
-            title: game.optionValue,
-            start,
-            end,
-            gameid: game.optionText,
-            eventid: eventid,
-          }
-        : {
-            ...eventToEdit,
-            title: game.optionValue,
-            start,
-            end,
-            gameid: game.optionText,
-          };
-
-      events.push(newEvent);
-    });
-
-    return events;
-  };
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    const updatedEvents = [];
-
-    userGames.forEach((game) => {
-      const eventid = isNewEvent ? Date.now() : eventToEdit.id;
-      const event = {
-        eventid: eventid,
-        title: game.optionValue,
-        start: start,
-        end: end,
-        gameid: game.optionText,
-      };
-      updatedEvents.push(event);
-    });
-
-    const userEvents = {
-      userId: currentUser.userId,
-      name: currentUser.name,
-      email: currentUser.email,
-      quantity: userGames.length,
-      events: updatedEvents.map((event) => ({
-        eventid: event.eventid,
-        title: event.title,
-        start: event.start,
-        end: event.end,
-        gameid: event.gameid,
-      })),
+    const newEvent = {
+      id: isNewEvent ? Date.now() : eventToEdit?.id,
+      title: selectedGameName,
+      start: start || eventToEdit?.start,
+      end: end || eventToEdit?.end,
+      gameid: selectedGameId,
+      quantity,
     };
 
-    saveToJotai(userEvents);
+    handleDialogSubmit(newEvent);
+  };
 
-    const newEvents = generateEventsFromUserGames();
-    handleDialogSubmit(newEvents);
-
-    setIsDialogOpen(false);
+  const handleDelete = () => {
+    if (eventToEdit) {
+      handleDeleteEvent(eventToEdit.id);
+    }
   };
 
   return (
@@ -134,9 +76,11 @@ const DialogEvent = ({
       <DialogSurface aria-describedby={undefined}>
         <form>
           <DialogBody>
-            <DialogTitle>Solicitud de Arriendo</DialogTitle>
+            <DialogTitle>Solicitud de Reserva</DialogTitle>
             <DialogContent className={styles.content}>
-              <ComboGames />
+              <p style={{ fontSize: '16px', marginBottom: '10px' }}>
+                {selectedGameName}
+              </p>
               <Label required htmlFor='start-input'>
                 Fecha de Inicio
               </Label>
@@ -146,6 +90,7 @@ const DialogEvent = ({
                 ariaLabel='Seleccione una fecha de inicio'
                 isDateDisabled={isDateDisabled}
                 minDate={minDate}
+                style={{ height: '40px' }}
               />
               <Label required htmlFor='end-input'>
                 Fecha de Fin
@@ -156,13 +101,34 @@ const DialogEvent = ({
                 ariaLabel='Seleccione una fecha de fin'
                 isDateDisabled={isDateDisabled}
                 minDate={minDate}
+                style={{ height: '40px' }}
               />
+              <Label required htmlFor='quantity-input'>
+                Cantidad
+              </Label>
+              <input
+                type='number'
+                id='quantity-input'
+                min='1'
+                max={stock}
+                value={quantity}
+                onChange={(e) => setQuantity(Math.min(stock, Math.max(1, e.target.value)))}
+                style={{ height: '40px', width: '100%' }}
+              />
+              <p style={{ color: 'red' }}>
+                Máximo disponible: {stock}
+              </p>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} appearance='secondary'>
+              <Button onClick={handleClose} appearance='secondary' style={{ height: '40px', marginTop: '20px' }}>
                 Cerrar
               </Button>
-              <Button onClick={handleSubmit} appearance='primary'>
+              {!isNewEvent && (
+                <Button onClick={handleDelete} appearance='danger' style={{ height: '40px', marginTop: '20px' }}>
+                  Eliminar
+                </Button>
+              )}
+              <Button onClick={handleSubmit} appearance='primary' style={{ height: '40px', marginTop: '20px' }}>
                 {isNewEvent ? 'Agregar' : 'Actualizar'}
               </Button>
             </DialogActions>

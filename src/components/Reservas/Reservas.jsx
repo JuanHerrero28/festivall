@@ -1,109 +1,75 @@
-
-import React from 'react';
-import { format, isBefore, isAfter, compareDesc } from 'date-fns';
-import { useReservas } from './useReservas';
+import { useAtom } from 'jotai';
+import { confirmedReservationsAtom } from '../../data/Store/eventStore';
+import { format } from 'date-fns';
+import { motion } from 'framer-motion';
 import Styles from './Reservas.module.css';
+import { useAuth } from '../AuthContext/AuthContext';
+const variants = {
+  open: {
+    y: 1,
+    opacity: 1,
+    transition: {
+      y: { stiffness: 100, damping: 10 },
+    },
+  },
+  closed: {
+    y: 10,
+    opacity: 0.5,
+    transition: {
+      y: { stiffness: 100, damping: 10 },
+      opacity: { duration: 1 },
+    },
+  },
+};
+
+const ReservaItem = ({ reserva }) => {
+  const { tituloJuego, cantidad, fechaInicio, fechaFin } = reserva;
+
+  return (
+    <motion.li
+      variants={variants}
+      whileHover={{ scale: 1 }}
+      whileTap={{ scale: 1 }}
+      className={Styles.juegoContenedor}
+    >
+      <div className={Styles.textContainer}>
+        <h2 className={Styles.juegoNombre}>{tituloJuego}</h2>
+        <p className={Styles.juegoDetalles}>
+          <strong>Cantidad:</strong> {cantidad}
+        </p>
+        <p className={Styles.juegoDetalles}>
+          <strong>Fecha de inicio:</strong> {format(new Date(fechaInicio), 'dd/MM/yyyy')}
+        </p>
+        <p className={Styles.juegoDetalles}>
+          <strong>Fecha de fin:</strong> {format(new Date(fechaFin), 'dd/MM/yyyy')}
+        </p>
+      </div>
+    </motion.li>
+  );
+};
 
 const Reservas = () => {
-  const userId = 22;
-  const { isLoading, isError, data: user, error } = useReservas(userId);
+  const [confirmedReservations] = useAtom(confirmedReservationsAtom);
+  const { isAuthenticated } = useAuth(); // Solo necesitamos verificar si el usuario está autenticado
 
-  if (isLoading) {
-    return <div className={Styles.loading}>Cargando reservas del usuario...</div>;
+  if (!isAuthenticated) {
+    return <p>Por favor, inicie sesión para ver sus reservas.</p>;
   }
 
-  if (isError) {
-    return <div>Error al cargar la información: {error.message}</div>;
+  if (confirmedReservations.length === 0) {
+    return <div>No tienes reservas confirmadas.</div>;
   }
-
-  const esProximaReserva = (fechaInicio) => {
-    const hoy = new Date();
-    return isAfter(new Date(fechaInicio), hoy);
-  };
-
-  const esReservaFinalizada = (fechaInicio) => {
-    const hoy = new Date();
-    return isBefore(new Date(fechaInicio), hoy);
-  };
-
-  const reservasConfirmadas = user.reservas
-    .filter((reserva) => esProximaReserva(reserva.fechaInicio))
-    .sort((a, b) => compareDesc(new Date(a.fechaInicio), new Date(b.fechaInicio)));
-
-  const reservasFinalizadas = user.reservas
-    .filter((reserva) => esReservaFinalizada(reserva.fechaInicio))
-    .sort((a, b) => compareDesc(new Date(a.fechaInicio), new Date(b.fechaInicio)));
 
   return (
     <div className={Styles.granContenedor}>
-      <h2>Reservas confirmadas</h2>
-      {reservasConfirmadas.map((reserva) =>
-        reserva.reservaJuegos.map((reservaJuego) => (
-          <div key={reservaJuego.juego.id} className={Styles.juegoContenedor}>
-            <img
-              src={reservaJuego.juego.img_url}
-              alt={reservaJuego.juego.nombre}
-              className={Styles.imagenJuego}
-            />
-            <div className={Styles.juegoInformacion}>
-              <p className={Styles.juegoNombre}>{reservaJuego.juego.nombre}</p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Cantidad:</strong> {reservaJuego.cantidad}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Fecha de inicio:</strong> {format(new Date(reserva.fechaInicio), 'dd/MM/yyyy')}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Fecha de fin:</strong> {format(new Date(reserva.fechaFin), 'dd/MM/yyyy')}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Valor unitario: $</strong> {reservaJuego.juego.valorArriendo}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Valor de la reserva: $</strong> {reserva.total}
-              </p>
-              <button className={Styles.botonConfirmada} disabled>Reserva confirmada</button>
-            </div>
-          </div>
-        ))
-      )}
-
-      <h2>Reservas finalizadas</h2>
-      {reservasFinalizadas.map((reserva) =>
-        reserva.reservaJuegos.map((reservaJuego) => (
-          <div key={reservaJuego.juego.id} className={Styles.juegoContenedor}>
-            <img
-              src={reservaJuego.juego.img_url}
-              alt={reservaJuego.juego.nombre}
-              className={Styles.imagenJuego}
-            />
-            <div className={Styles.juegoInformacion}>
-              <p className={Styles.juegoNombre}>{reservaJuego.juego.nombre}</p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Cantidad:</strong> {reservaJuego.cantidad}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Fecha de inicio:</strong>{' '}
-                {format(new Date(reserva.fechaInicio), 'dd/MM/yyyy')}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Fecha de fin:</strong>{' '}
-                {format(new Date(reserva.fechaFin), 'dd/MM/yyyy')}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Valor unitario: $</strong>{' '}
-                {reservaJuego.juego.valorArriendo}
-              </p>
-              <p className={Styles.juegoDetalles}>
-                <strong>Valor de la reserva: $</strong> {reserva.total}
-              </p>
-
-              <button className={Styles.botonFinalizada} disabled>Reserva finalizada</button>
-
-            </div>
-          </div>
-        ))
-      )}
+      <h2 className={Styles.title1}>Reservas confirmadas</h2>
+      <ul className={Styles.projectList}>
+        {confirmedReservations.map((reserva, index) =>
+          reserva.reservasDTO.map((detalle, idx) => (
+            <ReservaItem key={`${index}-${idx}`} reserva={detalle} />
+          ))
+        )}
+      </ul>
     </div>
   );
 };

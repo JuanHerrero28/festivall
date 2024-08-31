@@ -7,3 +7,5 @@ export const calendarEventsAtom = atom({
   quantity: 0,
   events: [],
 });
+
+export const confirmedReservationsAtom = atom([]);

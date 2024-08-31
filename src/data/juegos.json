@@ -1,245 +1,314 @@
 [
     {
-        "nombre": "Cotillon",
-        "descripcion": "Todo lo que necesitas para que tu fiesta sea inolvidable: disfraces, sombreros, serpentinas, y mucho más. Nuestro cotillón incluye una variedad de accesorios coloridos y divertidos que animarán cualquier celebración. Ideal para cumpleaños, bodas, aniversarios, y eventos corporativos. Transforma cualquier ambiente en una fiesta llena de alegría y diversión con nuestra selección de cotillón de alta calidad.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../../Documents/assets/inflables.jpg",
-        "tipo": {
-            "id": 2,
-            "nombre": "NINOS"
-        },
-        "caracteristicas": [
-            "Variedad de accesorios",
-            "Colores vibrantes",
-            "Perfecto para cualquier celebración",
-            "Alta calidad",
-            "Animación garantizada"
-        ]
+      "id": 1,
+      "nombre": "Castillo Inflable",
+      "descripcion": "Ideal para niños pequeños, diversión asegurada",
+      "largo": 30,
+      "ancho": 20,
+      "altura": 10,
+      "capacidad": 4,
+      "valorArriendo": 2000,
+      "cantidad": 3,
+      "img_urls": [
+        "../public/assets/castilloinflable1.jpeg",
+        "../public/assets/castilloinflable2.jpeg",
+        "../public/assets/castilloinflable3.jpeg",
+        "../public/assets/castilloinflable4.jpeg",
+        "../public/assets/centrodejuegos.jpeg"
+    ],
+      "tipo": {
+        "title": "Inflables y Castillos",
+        "description": "Juegos inflables para todas las edades",
+        "img_url": "../public/assets/inflables.jpg"
+      },
+      "caracteristicas": [
+        "Confortable",
+        "Fácil de instalar",
+        "Seguro para niños",
+        "Material resistente",
+        "Colores brillantes"
+    ],
+      "promedioValoracion": 4.5
     },
     {
-        "nombre": "Castillo Inflable",
-        "descripcion": "Un castillo inflable ideal para mantener a los niños entretenidos durante horas. Este inflable cuenta con colores vivos y una estructura segura que permite a los niños saltar y jugar sin preocupaciones. Perfecto para fiestas infantiles, eventos escolares, y reuniones familiares. La construcción resistente garantiza que los niños puedan disfrutar de una diversión sin fin mientras los padres pueden relajarse sabiendo que sus hijos están en un entorno seguro.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/ninos.jpg",
-        "tipo": {
-            "id": 1,
-            "nombre": "INFLABLES"
-        },
-        "caracteristicas": [
-            "Colores vivos",
-            "Estructura segura",
-            "Fácil de instalar",
-            "Construcción resistente",
-            "Ideal para niños"
-        ]
-    },
-    {
-        "nombre": "Castillo Inflable",
-        "descripcion": "Este castillo inflable es espacioso y seguro, diseñado para proporcionar diversión y risas en cualquier evento. Con una amplia área de salto y paredes laterales altas, es perfecto para grupos grandes de niños. Su diseño atractivo y colorido atraerá a los más pequeños y les proporcionará una experiencia inolvidable. Ideal para alquiler en cumpleaños, ferias, y festivales. Asegúrate de que tu evento sea recordado por todos con este increíble castillo inflable.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/castilloinflable3.jpeg",
-        "tipo": {
-            "id": 1,
-            "nombre": "INFLABLES"
-        },
-        "caracteristicas": [
-            "Área de salto amplia",
-            "Paredes laterales altas",
-            "Diseño atractivo",
-            "Ideal para grupos grandes",
-            "Perfecto para eventos"
-        ]
-    },
-    {
-        "nombre": "Castillo Inflable",
-        "descripcion": "El castillo inflable perfecto para fiestas, con colores vibrantes y una estructura robusta que garantiza horas de diversión. Este inflable es fácil de instalar y ofrece una zona de juego segura y divertida para los niños. Sus materiales de alta calidad aseguran durabilidad y resistencia, haciendo que sea una opción ideal para cualquier tipo de evento al aire libre. Proporciona entretenimiento sin fin y crea momentos memorables para los más pequeños.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/castilloinflable4.jpeg",
-        "tipo": {
-            "id": 1,
-            "nombre": "INFLABLES"
-        },
-        "caracteristicas": [
-            "Colores vibrantes",
-            "Estructura robusta",
-            "Fácil de instalar",
-            "Materiales de alta calidad",
-            "Seguridad garantizada"
-        ]
-    },
-    {
-        "nombre": "Castillo Inflable",
-        "descripcion": "Un divertido castillo inflable que ofrece una experiencia única de saltos y juegos, ideal para cualquier reunión infantil. Con una superficie amplia y paredes acolchadas, este castillo proporciona un entorno seguro para que los niños puedan saltar y jugar a su antojo. Su diseño atractivo y resistente lo convierte en la pieza central perfecta para cualquier evento infantil, asegurando que todos los niños se diviertan de manera segura y supervisada.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/castilloinflable1.jpeg",
-        "tipo": {
-            "id": 1,
-            "nombre": "INFLABLES"
-        },
-        "caracteristicas": [
-            "Superficie amplia",
-            "Paredes acolchadas",
-            "Entorno seguro",
-            "Diseño resistente",
-            "Ideal para reuniones infantiles"
-        ]
-    },
-    {
-        "nombre": "Centro de Juegos",
-        "descripcion": "Un centro de juegos completo con actividades para niños de todas las edades. Este centro de juegos incluye una variedad de estructuras y juegos que mantendrán a los niños activos y entretenidos durante horas. Con zonas de escalada, toboganes, y áreas de juego interactivo, es perfecto para fiestas, eventos escolares, y reuniones familiares. Fomenta la actividad física y el juego creativo en un entorno seguro y controlado, proporcionando diversión para todos.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/centrodejuegos.jpeg",
-        "tipo": {
-            "id": 1,
-            "nombre": "INFLABLES"
-        },
-        "caracteristicas": [
-            "Actividades variadas",
-            "Zonas de escalada",
-            "Toboganes incluidos",
-            "Juego interactivo",
-            "Fomenta la actividad física"
-        ]
-    },
-    {
-        "nombre": "Jenga Gigante",
-        "descripcion": "El clásico juego de Jenga en una versión gigante. Desafía a tus amigos y familiares a construir la torre más alta sin que se caiga. Este Jenga gigante es perfecto para exteriores e interiores, y es ideal para fiestas, barbacoas, y eventos corporativos. Hecho de madera de alta calidad, garantiza durabilidad y diversión para todos. Perfecto para desarrollar habilidades de concentración y destreza mientras se disfruta de un buen rato en compañía.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/jengaGiant.jpeg",
-        "tipo": {
-            "id": 5,
-            "nombre": "DESTREZA"
-        },
-        "caracteristicas": [
-            "Versión gigante",
-            "Ideal para exteriores e interiores",
-            "Hecho de madera",
-            "Desarrolla concentración",
-            "Diversión asegurada"
-        ]
-    },
-    {
-        "nombre": "Soga de Fuerza",
-        "descripcion": "Un emocionante juego de soga de fuerza que pondrá a prueba la resistencia y el trabajo en equipo de todos los participantes. Este juego es ideal para eventos al aire libre, fiestas infantiles, y competencias deportivas. Incluye una soga resistente y de alta calidad, diseñada para soportar la fuerza y la tensión de múltiples jugadores. Fomenta la cooperación y el espíritu de equipo mientras se disfruta de una actividad divertida y desafiante.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/juegoinfantil1.jpeg",
-        "tipo": {
-            "id": 5,
-            "nombre": "DESTREZA"
-        },
-        "caracteristicas": [
-            "Resistencia y trabajo en equipo",
-            "Ideal para exteriores",
-            "Soga de alta calidad",
-            "Soporta múltiples jugadores",
-            "Fomenta la cooperación"
-        ]
-    },
-    {
-        "nombre": "Paintball",
-        "descripcion": "La actividad perfecta para los amantes de la adrenalina. Disfruta de un emocionante juego de paintball con tus amigos. Equipado con pistolas de paintball de alta precisión y protecciones completas, este juego es ideal para eventos de team building, cumpleaños, y reuniones de amigos. Proporciona una experiencia intensa y llena de acción, donde la estrategia y la velocidad son clave para ganar. Asegura horas de diversión y competición sana en un entorno seguro.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/paintball.jpeg",
-        "tipo": {
-            "id": 5,
-            "nombre": "DESTREZA"
-        },
-        "caracteristicas": [
-            "Alta adrenalina",
-            "Equipamiento completo",
-            "Ideal para team building",
-            "Experiencia intensa",
-            "Estrategia y velocidad"
-        ]
-    },
-    {
-        "nombre": "Metegol",
-        "descripcion": "Un clásico juego de metegol que garantiza diversión y competencia en cualquier reunión o evento social. Este metegol está diseñado con materiales duraderos y una construcción robusta para soportar juegos intensos. Ideal para fiestas, bares, y eventos familiares. Promueve la interacción y la diversión entre los jugadores, proporcionando horas de entretenimiento. Perfecto para todas las edades, desde niños hasta adultos, que disfruten de un buen desafío.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/soccertable.jpeg",
-        "tipo": {
-            "id": 3,
-            "nombre": "ACCION"
-        },
-        "caracteristicas": [
-            "Diseño robusto",
-            "Materiales duraderos",
-            "Interacción y diversión",
-            "Ideal para todas las edades",
-            "Horas de entretenimiento"
-        ]
-    },
-    {
-        "nombre": "Pileta Inflable",
-        "descripcion": "Una pileta inflable ideal para refrescarse y divertirse durante los calurosos días de verano. Perfecta para fiestas y reuniones familiares, esta pileta inflable es fácil de montar y proporciona un lugar seguro para que los niños jueguen y se refresquen. Fabricada con materiales resistentes y duraderos, asegura una experiencia de uso prolongada. Añade un toque de diversión acuática a cualquier evento al aire libre y mantén a los niños felices y entretenidos durante horas.",
-        "largo": 1.4,
-        "ancho": 2,
-        "altura": 2,
-        "capacidad": 20,
-        "valorArriendo": 2400,
-        "cantidad": 3,
-        "img_url": "../public/assets/poolgames.jpeg",
-        "tipo": {
-            "id": 1,
-            "nombre": "INFLABLES"
-        },
-        "caracteristicas": [
-            "Fácil de montar",
-            "Materiales resistentes",
-            "Ideal para días calurosos",
-            "Diversión acuática",
-            "Segura para niños"
-        ]
-    }
-
-]
+      "id": 2,
+      "nombre": "Pelota Gigante",
+      "descripcion": "Clásica pelota gigante",
+      "largo": 50,
+      "ancho": 50,
+      "altura": 15,
+      "capacidad": 20,
+      "valorArriendo": 5000,
+      "cantidad": 2,
+      "img_urls": [
+          "../public/assets/pelota_gigante_1.jpg",
+          "../public/assets/pelota_gigante_2.jpg",
+          "../public/assets/pelota_gigante_3.jpg",
+          "../public/assets/pelota_gigante_4.jpg",
+          "../public/assets/pelota_gigante_5.jpg"
+      ],
+      "tipo": {
+          "title": "Inflables y Castillos",
+          "description": "Juegos inflables para todas las edades",
+          "img_url": "../public/assets/agua.jpg"
+      },
+      "caracteristicas": [
+          "Divertido",
+          "Resistente",
+          "Colorido",
+          "Fácil de manejar",
+          "Ideal para eventos grandes"
+      ],
+      "promedioValoracion": 4.8
+  },
+  {
+      "id": 3,
+      "nombre": "Pileta Inflable",
+      "descripcion": "Una gran pileta inflable para que los niños se diviertan en el agua.",
+      "largo": 50,
+      "ancho": 30,
+      "altura": 10,
+      "capacidad": 10,
+      "valorArriendo": 3000,
+      "cantidad": 2,
+      "img_urls": [
+          "../public/assets/poolgames.jpeg",
+          "../public/assets/poolgames2.jpeg",
+          "../public/assets/poolgames3.jpeg",
+          "../public/assets/poolgames4.jpeg",
+          "../public/assets/poolgames5.jpeg"
+      ],
+      "tipo": {
+          "title": "Juegos de Agua",
+          "description": "Juegos inflables para todas las edades",
+          "img_url": "../public/assets/inflables.jpg"
+      },
+      "caracteristicas": [
+          "Refrescante",
+          "Espaciosa",
+          "Fácil de inflar",
+          "Colorida",
+          "Ideal para verano"
+      ],
+      "promedioValoracion": 4.2
+  },
+  {
+      "id": 4,
+      "nombre": "Obstáculos para Niños",
+      "descripcion": "Un circuito de obstáculos diseñado para desafiar a los niños.",
+      "largo": 40,
+      "ancho": 20,
+      "altura": 5,
+      "capacidad": 15,
+      "valorArriendo": 2500,
+      "cantidad": 3,
+      "img_urls": [
+          "../public/assets/obstaculos_1.jpg",
+          "../public/assets/obstaculos_2.jpg",
+          "../public/assets/obstaculos_3.jpg",
+          "../public/assets/obstaculos_4.jpg",
+          "../public/assets/obstaculos_5.jpg"
+      ],
+      "tipo": {
+          "title": "Niños Pequeños",
+          "description": "Juegos que desafían tus habilidades",
+          "img_url": "../public/assets/ninos.jpg"
+      },
+      "caracteristicas": [
+          "Desafiante",
+          "Seguro",
+          "Divertido",
+          "Fácil de montar",
+          "Adecuado para eventos"
+      ],
+      "promedioValoracion": 4.5
+  },
+  {
+      "id": 5,
+      "nombre": "Lego Gigante",
+      "descripcion": "Piezas de lego gigantes para construir lo que imagines.",
+      "largo": 10,
+      "ancho": 10,
+      "altura": 10,
+      "capacidad": 6,
+      "valorArriendo": 1500,
+      "cantidad": 4,
+      "img_urls": [
+          "../public/assets/lego_1.jpg",
+          "../public/assets/lego_2.jpg",
+          "../public/assets/lego_3.jpg",
+          "../public/assets/lego_4.jpg",
+          "../public/assets/lego_5.jpg"
+      ],
+      "tipo": {
+          "title": "Juegos de Destreza",
+          "description": "Juegos que desarrollan la creatividad",
+          "img_url": "../public/assets/destreza.jpg"
+      },
+      "caracteristicas": [
+          "Creativo",
+          "Duradero",
+          "Fácil de limpiar",
+          "Estimula la imaginación",
+          "Ideal para todas las edades"
+      ],
+      "promedioValoracion": 4.6
+  },
+  {
+      "id": 6,
+      "nombre": "Soga de Fuerza",
+      "descripcion": "Juego de tirar la soga para equipos de todas las edades.",
+      "largo": 20,
+      "ancho": 2,
+      "altura": 2,
+      "capacidad": 10,
+      "valorArriendo": 1000,
+      "cantidad": 5,
+      "img_urls": [
+          "../public/assets/soga_1.jpg",
+          "../public/assets/soga_2.jpg",
+          "../public/assets/soga_3.jpg",
+          "../public/assets/soga_4.jpg",
+          "../public/assets/soga_5.jpg"
+      ],
+      "tipo": {
+          "title": "Juegos de Destreza",
+          "description": "Juegos que desafían tus habilidades",
+          "img_url": "../public/assets/destreza.jpg"
+      },
+      "caracteristicas": [
+          "Competitivo",
+          "Resistente",
+          "Divertido",
+          "Ideal para grupos",
+          "Fácil de transportar"
+      ],
+      "promedioValoracion": 4.3
+  },
+  {
+      "id": 7,
+      "nombre": "Jenga Gigante",
+      "descripcion": "El clásico juego de Jenga en una versión gigante.",
+      "largo": 2,
+      "ancho": 2,
+      "altura": 3,
+      "capacidad": 4,
+      "valorArriendo": 1200,
+      "cantidad": 4,
+      "img_urls": [
+          "../public/assets/jenga_1.jpg",
+          "../public/assets/jenga_2.jpg",
+          "../public/assets/jenga_3.jpg",
+          "../public/assets/jenga_4.jpg",
+          "../public/assets/jenga_5.jpg"
+      ],
+      "tipo": {
+          "title": "Juegos Mecánicos",
+          "description": "Juegos que desafían tus habilidades",
+          "img_url": "../public/assets/mecanico.jpg"
+      },
+      "caracteristicas": [
+          "Emocionante",
+          "Duradero",
+          "Ideal para eventos",
+          "Fácil de jugar",
+          "Divertido"
+      ],
+      "promedioValoracion": 4.4
+  },
+  {
+      "id": 8,
+      "nombre": "Pelotero",
+      "descripcion": "Un área de juegos con bolas de colores para los más pequeños.",
+      "largo": 30,
+      "ancho": 30,
+      "altura": 10,
+      "capacidad": 20,
+      "valorArriendo": 2000,
+      "cantidad": 2,
+      "img_urls": [
+          "../public/assets/piscina_pelotas_1.jpg",
+          "../public/assets/piscina_pelotas_2.jpg",
+          "../public/assets/piscina_pelotas_3.jpg",
+          "../public/assets/piscina_pelotas_4.jpg",
+          "../public/assets/piscina_pelotas_5.jpg"
+      ],
+      "tipo": {
+          "title": "Niños Pequeños",
+          "description": "Juegos inflables para todas las edades",
+          "img_url": "../public/assets/ninos.jpg"
+      },
+      "caracteristicas": [
+          "Divertido",
+          "Colorido",
+          "Seguro",
+          "Espacioso",
+          "Ideal para grupos"
+      ],
+      "promedioValoracion": 4.6
+  },
+  {
+      "id": 9,
+      "nombre": "Metegol",
+      "descripcion": "Mesa de futbolín para jugar en equipo.",
+      "largo": 2,
+      "ancho": 1.2,
+      "altura": 0.9,
+      "capacidad": 4,
+      "valorArriendo": 1500,
+      "cantidad": 3,
+      "img_urls": [
+          "../public/assets/taca_1.jpg",
+          "../public/assets/taca_2.jpg",
+          "../public/assets/taca_3.jpg",
+          "../public/assets/taca_4.jpg",
+          "../public/assets/taca_5.jpg"
+      ],
+      "tipo": {
+          "title": "Juegos Mecánicos",
+          "description": "Juegos que desafían tus habilidades",
+          "img_url": "../public/assets/mecanico.jpg"
+      },
+      "caracteristicas": [
+          "Competitivo",
+          "Resistente",
+          "Ideal para eventos",
+          "Divertido",
+          "Fácil de montar"
+      ],
+      "promedioValoracion": 4.5
+  },
+  {
+      "id": 10,
+      "nombre": "Toro Mecánico",
+      "descripcion": "Desafía tus habilidades de equilibrio en el toro mecánico.",
+      "largo": 25,
+      "ancho": 15,
+      "altura": 5,
+      "capacidad": 6,
+      "valorArriendo": 2500,
+      "cantidad": 3,
+      "img_urls": [
+          "../public/assets/Toro_7.jpg",
+          "../public/assets/Toro_2.jpg",
+          "../public/assets/Toro_3.jpg",
+          "../public/assets/Toro_8.jpg",
+          "../public/assets/Toro_1.jpg"
+      ],
+      "tipo": {
+          "title": "Juegos Mecánicos",
+          "description": "Para los amantes de la adrenalina",
+          "img_url": "../public/assets/mecanico.jpg"
+      },
+      "caracteristicas": [
+          "Divertido",
+          "Resistente",
+          "Fácil de inflar",
+          "Ideal para competencias",
+          "Colorido"
+      ],
+      "promedioValoracion": 4.7
+  }
+    
+  ]
+  

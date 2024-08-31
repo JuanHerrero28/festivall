@@ -1,12 +1,9 @@
-const API_URL = 'https://sunny-exploration-production.up.railway.app/api/usuarios';
 
+// user.js
 export const getUsers = async () => {
   try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error('Error al obtener usuarios');
-    }
-    const users = await response.json();
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
     return users;
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
@@ -16,40 +13,39 @@ export const getUsers = async () => {
 
 export const createUser = async (userData) => {
   try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-    if (!response.ok) {
-      throw new Error('Error al crear usuario');
+    const emailExists = users.some(user => user.email === userData.email);
+    if (emailExists) {
+      return { success: false, message: 'El correo electrónico ya está en uso' };
     }
 
-    const newUser = await response.json();
-    return newUser;
+    const newUser = { ...userData, id: (users.length + 1).toString() };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    return { success: true, user: newUser };
   } catch (error) {
     console.error('Error al crear usuario:', error);
-    throw error;
+    return { success: false, message: 'Error al crear usuario' };
   }
 };
 
-export const updateUser = async (userId) => {
+
+
+
+
+export const updateUser = async (userId, userData) => {
   try {
-    const response = await fetch(API_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userId),
-    });
-    if (!response.ok) {
-      throw new Error('Error al actualizar usuario');
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const index = users.findIndex(user => user.id === userId);
+    if (index === -1) {
+      throw new Error('Usuario no encontrado');
     }
-    const updatedUser = await response.json();
-    return updatedUser;
+    users[index] = { ...users[index], ...userData };
+    localStorage.setItem('users', JSON.stringify(users));
+    return users[index];
   } catch (error) {
     console.error('Error al actualizar usuario:', error);
     throw error;
@@ -58,12 +54,14 @@ export const updateUser = async (userId) => {
 
 export const deleteUser = async (userId) => {
   try {
-    const response = await fetch(`${API_URL}/${userId}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) {
-      throw new Error('Error al eliminar usuario');
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const index = users.findIndex(user => user.id === userId);
+    if (index === -1) {
+      throw new Error('Usuario no encontrado');
     }
+    users.splice(index, 1);
+    localStorage.setItem('users', JSON.stringify(users));
   } catch (error) {
     console.error('Error al eliminar usuario:', error);
     throw error;
@@ -72,11 +70,12 @@ export const deleteUser = async (userId) => {
 
 export const getUserById = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/${id}`); // Corregido para usar `${API_URL}/${id}`
-    if (!response.ok) {
-      throw new Error('Error al obtener usuario por ID');
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.id === id);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
     }
-    const user = await response.json();
     return user;
   } catch (error) {
     console.error('Error al obtener usuario por ID:', error);
@@ -86,14 +85,34 @@ export const getUserById = async (id) => {
 
 export const getUserIdByEmail = async (email) => {
   try {
-    const response = await fetch(`${API_URL}?email=${email}`);
-    if (!response.ok) {
-      throw new Error('Error al obtener el ID del usuario por email');
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.email === email);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
     }
-    const user = await response.json();
     return user.id;
   } catch (error) {
     console.error('Error al obtener el ID del usuario por email:', error);
     throw error;
   }
 };
+
+export const validateUser = async (email, password) => {
+  try {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.email === email && user.contraseña === password);
+    if (user) {
+      // Guardar el tipo de cuenta en el localStorage
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      return { success: true, user };
+    }
+    return { success: false, message: 'Credenciales incorrectas' };
+  } catch (error) {
+    console.error('Error al validar usuario:', error);
+    return { success: false, message: 'Error al validar usuario' };
+  }
+};
+
+

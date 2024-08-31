@@ -1,163 +1,112 @@
-const API_URL = 'https://sunny-exploration-production.up.railway.app/api/juegos';
+// data/simuladoServicio.js
+import juegosData from './juegos.json';
+
 
 // Obtener todos los juegos
 const obtenerProductos = async () => {
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error('error', response.statusText);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('error', error);
-    throw error;
-  }
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(juegosData), 1000); // Simula un retraso de 1 segundo
+  });
 };
 
 // Agregar un nuevo juego
 const agregarProducto = async (nuevoProducto) => {
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(nuevoProducto),
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      nuevoProducto.id = juegosData.length + 1; // Simula un ID autogenerado
+      juegosData.push(nuevoProducto);
+      resolve(nuevoProducto);
+    }, 1000); // Simula un retraso de 1 segundo
   });
-
-  if (!response.ok) {
-    throw new Error('Error al agregar el producto');
-  }
-
-  const data = await response.json();
-  'Producto agregado:', data;
-  return data;
 };
 
-const actualizarProducto = async (nuevoProducto) => {
-  const response = await fetch(API_URL, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(nuevoProducto),
+// Actualizar un juego
+const actualizarProducto = async (actualizadoProducto) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const index = juegosData.findIndex(p => p.id === actualizadoProducto.id);
+      if (index !== -1) {
+        juegosData[index] = actualizadoProducto;
+        resolve(actualizadoProducto);
+      } else {
+        throw new Error('Producto no encontrado');
+      }
+    }, 1000); // Simula un retraso de 1 segundo
   });
-
-  if (!response.ok) {
-    throw new Error('Error al actualizar el producto');
-  }
-
-  const data = await response.json();
-  'Producto actualizado:', data;
-  return data;
 };
 
 // Obtener un juego por ID
 const obtenerProductoPorId = async (id) => {
-  const response = await fetch(`${API_URL}/${id}`);
-  const data = await response.json();
-  return data;
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const producto = juegosData.find(p => p.id === id);
+      resolve(producto);
+    }, 1000); // Simula un retraso de 1 segundo
+  });
 };
 
 // Eliminar un juego
 const eliminarProducto = async (id) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: 'DELETE',
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const index = juegosData.findIndex(p => p.id === id);
+      if (index !== -1) {
+        juegosData.splice(index, 1);
+        resolve(id);
+      } else {
+        throw new Error('Producto no encontrado');
+      }
+    }, 1000); // Simula un retraso de 1 segundo
   });
-
-  if (!response.ok) {
-    throw new Error(`Error al eliminar el producto con id ${id}`);
-  }
-
-  `Producto con id ${id} eliminado.`;
-  return id;
 };
 
+// Función simulada para obtener sugerencias
 const fetchSuggestions = async () => {
-  try {
-    const response = await fetch('https://sunny-exploration-production.up.railway.app/api/juegos/suggestion');
-    const data = await response.json();
-    if (!data || data.length === 0) {
-      return [];
-    }
-    return data;
-  } catch (error) {
-    console.error('Error fetching suggestions:', error);
-    return [];
-  }
+  return new Promise((resolve) => {
+    setTimeout(() => resolve([]), 1000); // Simula un retraso de 1 segundo
+  });
 };
 
+// Obtener valoraciones por ID del juego
 const getValoraciones = async (juegoId) => {
-  const response = await fetch(
-    `https://sunny-exploration-production.up.railway.app/api/valoracion/filter/${juegoId}`
-  );
-  if (!response.ok) {
-    throw new Error('Error al obtener valoraciones');
-  }
-  return response.json();
+  console.log(`Obteniendo valoraciones para el juego con ID: ${juegoId}`);
+  // Aquí puedes simular la respuesta, por ejemplo, filtrando las valoraciones de un conjunto de datos
+  return new Promise((resolve) => {
+    setTimeout(() => resolve([]), 1000); // Simula un retraso de 1 segundo
+  });
 };
 
+
+// Función simulada para enviar valoraciones
 const enviarValoracion = async (juegoId, valoracionData) => {
-  const response = await fetch(
-    `https://sunny-exploration-production.up.railway.app/api/valoracion/${juegoId}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(valoracionData),
-    }
-  );
-  if (!response.ok) {
-    throw new Error('Error al enviar la valoración');
-  }
-  return response.json();
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(valoracionData), 1000); // Simula un retraso de 1 segundo
+  });
 };
 
-
+// Verificar disponibilidad de reserva
 const verificarDisponibilidad = async (datosReserva) => {
-  const response = await fetch(
-    'https://sunny-exploration-production.up.railway.app/api/reservas/disponibles',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(datosReserva),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Error al verificar la disponibilidad');
-  }
-
-  return response.json();
-};
-
-export const postReservation = async (reservationData) => {
-  try {
-    console.log('Data enviada al servidor:', reservationData);
-    const response = await fetch("https://sunny-exploration-production.up.railway.app/api/reservas", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reservationData),
+  console.log('Datos de reserva recibidos:', datosReserva);
+  // Simula la verificación de disponibilidad
+  const juego = juegosData.find(j => j.id === datosReserva.juegoId);
+  if (juego && juego.cantidad > 0) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ disponible: true }), 1000); // Simula un retraso de 1 segundo
     });
-
-    if (!response.ok) {
-      throw new Error("Error en la solicitud");
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Error al realizar la reserva:", error);
-    throw error;
+  } else {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ disponible: false }), 1000); // Simula un retraso de 1 segundo
+    });
   }
 };
 
-
+// Hacer una reserva
+const postReservation = async (reservationData) => {
+  console.log('Datos de reserva enviados al servidor:', reservationData);
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(reservationData), 1000); // Simula un retraso de 1 segundo
+  });
+};
 
 
 export {
@@ -170,4 +119,5 @@ export {
   getValoraciones,
   enviarValoracion,
   verificarDisponibilidad,
+  postReservation
 };

@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@fluentui/react-components';
 import { ImSearch } from 'react-icons/im';
-import { useNavigate } from 'react-router-dom';
-// import { useAuth0 } from '@auth0/auth0-react'; // Comentado por ahora
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SignUpModal from '../Modal/SignUpModal';
 import MenuAvatar from './MenuAvatar';
@@ -10,7 +9,6 @@ import SearchDrawer from '../Search/SearchDrawer';
 import { useAuth } from '../AuthContext/AuthContext';
 import { useAtom } from 'jotai';
 import { drawerOpenAtom } from '../../data/Store/drawerStore';
-import { Link } from "react-router-dom";
 import { BsHandbag } from "react-icons/bs";
 
 const NavbarContainer = styled.nav`
@@ -74,10 +72,9 @@ const NavButton = styled.button`
 `;
 
 const Navbar = ({ menuItems, logo }) => {
-  const admin = true;
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const { isAuthenticated, user, login } = useAuth();
+  const [openDialog, setOpenDialog] = useState(false);
+  const { isAuthenticated, user } = useAuth();
   const [open, setOpen] = useAtom(drawerOpenAtom);
 
   const redirectToHome = () => {
@@ -89,16 +86,15 @@ const Navbar = ({ menuItems, logo }) => {
   };
 
   const handleSignUpClick = () => {
-    setShowModal(true);
+    setOpenDialog(true);
   };
 
   const handleLogin = () => {
-    const simulatedUser = {
-      name: 'John Doe',
-      picture: '/assets/ninos.jpg',
-    };
-    login(simulatedUser);
+    navigate('/login'); // Redirige al usuario a la página de login
   };
+
+  // Leer el tipo de cuenta del localStorage
+  const isAdmin = localStorage.getItem('accountType') === 'ADMIN';
 
   return (
     <>
@@ -115,7 +111,7 @@ const Navbar = ({ menuItems, logo }) => {
           {menuItems.map((item) => (
             <NavButton key={item}>{item}</NavButton>
           ))}
-          {isAuthenticated && admin && (
+          {isAuthenticated && isAdmin && (
             <NavButton onClick={redirectToAdmin}>Admin</NavButton>
           )}
         </CenterSection>
@@ -130,38 +126,39 @@ const Navbar = ({ menuItems, logo }) => {
             Buscar
           </Button>
           <Link
-        to="/detalle-reservas"
-        style={{
-          textDecoration: "none",
-          color: "inherit",
-          position: "relative",
-        }}
-      >
-        <BsHandbag
-          style={{
-            fontSize: "20px",
-            color: "#795af6", // Color a ajustar según tus estilos
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            console.log(
-              "Icon clicked, redirecting to reservations detail page"
-            );
-            // Aquí podrías añadir más lógica si fuera necesario
-          }}
-        />
-      </Link>
-          {isAuthenticated && <MenuAvatar user={user} />}
-          {!isAuthenticated ? (
-            <NavButton onClick={handleLogin}>LogIn</NavButton>
+            to="/detalle-reservas"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              position: "relative",
+            }}
+          >
+            <BsHandbag
+              style={{
+                fontSize: "20px",
+                color: "#795af6", // Color a ajustar según tus estilos
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                console.log(
+                  "Icon clicked, redirecting to reservations detail page"
+                );
+                // Aquí podrías añadir más lógica si fuera necesario
+              }}
+            />
+          </Link>
+          {isAuthenticated ? (
+            <>
+              <MenuAvatar user={user} />
+            </>
           ) : (
-            <></>
+            <NavButton onClick={handleLogin}>LogIn</NavButton>
           )}
           <NavButton onClick={handleSignUpClick}>Sign Up</NavButton>
         </RightSection>
       </NavbarContainer>
       <SearchDrawer open={open} onClose={() => setOpen(false)} />
-      <SignUpModal showModal={showModal} setShowModal={setShowModal} />
+      <SignUpModal open={openDialog} setOpen={setOpenDialog} />
     </>
   );
 };

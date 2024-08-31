@@ -24,6 +24,7 @@ import { useSetAtom, useAtom } from 'jotai';
 import { availableGamesAtom } from '../../data/Store/availableStore';
 import { drawerOpenAtom } from '../../data/Store/drawerStore';
 
+
 const localizedStrings = {
   days: [
     'Domingo',
@@ -161,7 +162,7 @@ const SearchSuggestion = () => {
   const customStyles = useStyles();
   const [availableGames, setAvailableGames] = useAtom(availableGamesAtom);
   const {
-    mutate: verificarDisponibilidad,
+    mutate:
     data,
     isSuccess,
   } = useVerificarDisponibilidad();
@@ -236,23 +237,53 @@ const SearchSuggestion = () => {
   }, []);
 
   const handleSearch = useCallback(() => {
-    const sendToPost = {
-      nombreJuego: searchTerm,
-      fechaInicio: formatDateAMD(initialDate),
-      fechaFin: formatDateAMD(finishDate),
-    };
-    verificarDisponibilidad(sendToPost);
-  }, [initialDate, finishDate, searchTerm, verificarDisponibilidad]);
+    if (!searchTerm || !initialDate || !finishDate) {
+      console.error('Datos de búsqueda incompletos');
+      return;
+    }
+  
+    // Limpia los juegos disponibles antes de realizar una nueva búsqueda
+    setAvailableGames([]);
+  
+    // Simula que todos los juegos están disponibles para la búsqueda
+    const juegosDisponibles = availableGames.filter(juego =>
+      juego.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  
+    // Actualiza el estado de juegos disponibles con los resultados filtrados
+    setAvailableGames(juegosDisponibles.map(juego => ({ ...juego, disponible: true })));
+    console.log('Disponibilidad simulada:', juegosDisponibles);
+  
+    // Cierra el Drawer
+    setOpen(false);
+  
+    // Limpia el término de búsqueda y las fechas después de la búsqueda
+    setSearchTerm('');
+    setInitialDate(null);
+    setFinishDate(null);
+  }, [searchTerm, initialDate, finishDate, availableGames, setAvailableGames, setOpen]);
+  
+  
+  
+
+  
 
   useEffect(() => {
-    if (data) {
-      setAvailableGames(data); // Actualiza el estado con los datos de disponibilidad
-      console.log('Disponibilidad:', data);
+    if (data && Array.isArray(data)) {
+      const updatedData = data.map((product) => ({
+        ...product,
+        disponible: true, // Fuerza la disponibilidad a true
+      }));
+      setAvailableGames(updatedData);
+      console.log('Disponibilidad:', updatedData);
+    } else {
+      console.error('Expected `data` to be an array but got:', data);
     }
     if (isSuccess) {
       setOpen(false);
     }
-  }, [data, setAvailableGames]);
+  }, [data, isSuccess, setAvailableGames, setOpen]); // Asegúrate de que estas dependencias no causen un bucle
+
 
   /*  const handleSearch = useCallback(async () => {
     const sendToPost = {
