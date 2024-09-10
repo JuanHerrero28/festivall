@@ -41,11 +41,11 @@
       "valorArriendo": 5000,
       "cantidad": 2,
       "img_urls": [
-          "../public/assets/pelota_gigante_1.jpg",
-          "../public/assets/pelota_gigante_2.jpg",
-          "../public/assets/pelota_gigante_3.jpg",
-          "../public/assets/pelota_gigante_4.jpg",
-          "../public/assets/pelota_gigante_5.jpg"
+          "/assets/pelota_gigante_1.jpg",
+          "/assets/pelota_gigante_2.jpg",
+          "/assets/pelota_gigante_3.jpg",
+          "/assets/pelota_gigante_4.jpg",
+          "/assets/pelota_gigante_5.jpg"
       ],
       "tipo": {
           "title": "Inflables y Castillos",
@@ -72,11 +72,11 @@
       "valorArriendo": 3000,
       "cantidad": 2,
       "img_urls": [
-          "../public/assets/poolgames.jpeg",
-          "../public/assets/poolgames2.jpeg",
-          "../public/assets/poolgames3.jpeg",
-          "../public/assets/poolgames4.jpeg",
-          "../public/assets/poolgames5.jpeg"
+          "/assets/poolgames.jpeg",
+          "/assets/poolgames2.jpeg",
+          "/assets/poolgames3.jpeg",
+          "/assets/poolgames4.jpeg",
+          "/assets/poolgames5.jpeg"
       ],
       "tipo": {
           "title": "Juegos de Agua",
@@ -103,11 +103,11 @@
       "valorArriendo": 2500,
       "cantidad": 3,
       "img_urls": [
-          "../public/assets/obstaculos_1.jpg",
-          "../public/assets/obstaculos_2.jpg",
-          "../public/assets/obstaculos_3.jpg",
-          "../public/assets/obstaculos_4.jpg",
-          "../public/assets/obstaculos_5.jpg"
+          "/assets/obstaculos_1.jpg",
+          "/assets/obstaculos_2.jpg",
+          "/assets/obstaculos_3.jpg",
+          "/assets/obstaculos_4.jpg",
+          "/assets/obstaculos_5.jpg"
       ],
       "tipo": {
           "title": "Niños Pequeños",
@@ -134,11 +134,11 @@
       "valorArriendo": 1500,
       "cantidad": 4,
       "img_urls": [
-          "../public/assets/lego_1.jpg",
-          "../public/assets/lego_2.jpg",
-          "../public/assets/lego_3.jpg",
-          "../public/assets/lego_4.jpg",
-          "../public/assets/lego_5.jpg"
+          "/assets/lego_1.jpg",
+          "/assets/lego_2.jpg",
+          "/assets/lego_3.jpg",
+          "/assets/lego_4.jpg",
+          "/assets/lego_5.jpg"
       ],
       "tipo": {
           "title": "Juegos de Destreza",
@@ -165,11 +165,11 @@
       "valorArriendo": 1000,
       "cantidad": 5,
       "img_urls": [
-          "../public/assets/soga_1.jpg",
-          "../public/assets/soga_2.jpg",
-          "../public/assets/soga_3.jpg",
-          "../public/assets/soga_4.jpg",
-          "../public/assets/soga_5.jpg"
+          "/assets/soga_1.jpg",
+          "/assets/soga_2.jpg",
+          "/assets/soga_3.jpg",
+          "/assets/soga_4.jpg",
+          "/assets/soga_5.jpg"
       ],
       "tipo": {
           "title": "Juegos de Destreza",
@@ -196,11 +196,11 @@
       "valorArriendo": 1200,
       "cantidad": 4,
       "img_urls": [
-          "../public/assets/jenga_1.jpg",
-          "../public/assets/jenga_2.jpg",
-          "../public/assets/jenga_3.jpg",
-          "../public/assets/jenga_4.jpg",
-          "../public/assets/jenga_5.jpg"
+          "/assets/jenga_1.jpg",
+          "/assets/jenga_2.jpg",
+          "/assets/jenga_3.jpg",
+          "/assets/jenga_4.jpg",
+          "/assets/jenga_5.jpg"
       ],
       "tipo": {
           "title": "Juegos Mecánicos",
@@ -227,11 +227,11 @@
       "valorArriendo": 2000,
       "cantidad": 2,
       "img_urls": [
-          "../public/assets/piscina_pelotas_1.jpg",
-          "../public/assets/piscina_pelotas_2.jpg",
-          "../public/assets/piscina_pelotas_3.jpg",
-          "../public/assets/piscina_pelotas_4.jpg",
-          "../public/assets/piscina_pelotas_5.jpg"
+          "/assets/piscina_pelotas_1.jpg",
+          "/assets/piscina_pelotas_2.jpg",
+          "/assets/piscina_pelotas_3.jpg",
+          "/assets/piscina_pelotas_4.jpg",
+          "/assets/piscina_pelotas_5.jpg"
       ],
       "tipo": {
           "title": "Niños Pequeños",
@@ -258,11 +258,11 @@
       "valorArriendo": 1500,
       "cantidad": 3,
       "img_urls": [
-          "../public/assets/taca_1.jpg",
-          "../public/assets/taca_2.jpg",
-          "../public/assets/taca_3.jpg",
-          "../public/assets/taca_4.jpg",
-          "../public/assets/taca_5.jpg"
+          "/assets/taca_1.jpg",
+          "/assets/taca_2.jpg",
+          "/assets/taca_3.jpg",
+          "/assets/taca_4.jpg",
+          "/assets/taca_5.jpg"
       ],
       "tipo": {
           "title": "Juegos Mecánicos",
@@ -289,11 +289,11 @@
       "valorArriendo": 2500,
       "cantidad": 3,
       "img_urls": [
-          "../public/assets/Toro_7.jpg",
-          "../public/assets/Toro_2.jpg",
-          "../public/assets/Toro_3.jpg",
-          "../public/assets/Toro_8.jpg",
-          "../public/assets/Toro_1.jpg"
+          "/assets/Toro_7.jpg",
+          "/assets/Toro_2.jpg",
+          "/assets/Toro_3.jpg",
+          "/assets/Toro_8.jpg",
+          "/assets/Toro_1.jpg"
       ],
       "tipo": {
           "title": "Juegos Mecánicos",
