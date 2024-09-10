@@ -10,11 +10,11 @@
       "valorArriendo": 2000,
       "cantidad": 3,
       "img_urls": [
-        "../public/assets/castilloinflable1.jpeg",
-        "../public/assets/castilloinflable2.jpeg",
-        "../public/assets/castilloinflable3.jpeg",
-        "../public/assets/castilloinflable4.jpeg",
-        "../public/assets/centrodejuegos.jpeg"
+        "/assets/castilloinflable1.jpeg",
+        "/assets/castilloinflable2.jpeg",
+        "/assets/castilloinflable3.jpeg",
+        "/assets/castilloinflable4.jpeg",
+        "/assets/centrodejuegos.jpeg"
     ],
       "tipo": {
         "title": "Inflables y Castillos",
