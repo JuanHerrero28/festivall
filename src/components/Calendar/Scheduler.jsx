@@ -4,6 +4,7 @@ import { calendarEventsAtom } from '../../data/Store/eventStore';
 import { userAtom } from '../../data/Store/userAtom';
 import { useAtom } from 'jotai';
 import moment from 'moment';
+import juegos from '../../data/juegos.json';
 import DialogEvent from './DialogEvent';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styles from './Scheduler.module.css';
@@ -42,11 +43,40 @@ const Scheduler = ({ selectedGameId, selectedGameName, selectedCantidad, onEvent
 
   const handleDialogSubmit = (data) => {
     console.log('Dialog submit data:', data);
+
+    // Buscar el juego seleccionado en juegos.json
+    const selectedGame = juegos.find(juego => juego.id === selectedGameId);
+
+    if (!selectedGame) {
+      console.error('Juego no encontrado para calcular el valor de arriendo.');
+      return;
+    }
+
+    // Asegúrate de que quantity sea un número
+    const cantidad = parseInt(data.quantity, 10);
+    const valorArriendo = parseFloat(selectedGame.valorArriendo);
+
+    if (isNaN(cantidad) || isNaN(valorArriendo)) {
+      console.error('Cantidad o valor de arriendo no válidos.');
+      return;
+    }
+
+    // Calcular el valor total del arriendo basado en la cantidad proporcionada
+    const valorTotalArriendo = cantidad * valorArriendo;
+
+    console.log('Cantidad:', cantidad);
+    console.log('Valor Arriendo:', valorArriendo);
+    console.log('Valor Total Arriendo:', valorTotalArriendo);
+
     let updatedEvents;
-  
+
     if (selectedEvent) {
       updatedEvents = events.map(event =>
-        event.id === selectedEvent.id ? { ...event, ...data } : event
+        event.id === selectedEvent.id ? {
+          ...event,
+          ...data,
+          valorTotalArriendo // Asegúrate de que el valor total se actualice
+        } : event
       );
     } else {
       const newEvent = {
@@ -57,25 +87,26 @@ const Scheduler = ({ selectedGameId, selectedGameName, selectedCantidad, onEvent
         userId: user.id,
         userName: user.nombre,
         userEmail: user.email,
+        valorTotalArriendo // Añade el valor total del arriendo al nuevo evento
       };
       updatedEvents = [...events, newEvent];
     }
-  
+
     console.log('Updated events:', updatedEvents);
-  
+
     setEvents(updatedEvents);
     setCalendarEvents(prev => ({
       ...prev,
       events: updatedEvents,
       email: user.email,
       name: user.nombre,
-      quantity: selectedCantidad,
+      quantity: cantidad, // Cantidad seleccionada
       userId: user.id,
+      valorTotalArriendo // Valor total del arriendo calculado
     }));
-  
+
     setIsDialogOpen(false);
   };
-  
 
   const handleDeleteEvent = (eventId) => {
     console.log('Deleting event with ID:', eventId);

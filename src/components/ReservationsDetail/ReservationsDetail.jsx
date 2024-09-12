@@ -26,6 +26,7 @@ import { useId } from "react";
 import { Link } from "react-router-dom";
 
 
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -157,6 +158,7 @@ const ReservationsDetail = () => {
         fechaInicio: formatDateAMD(event.start),
         fechaFin: formatDateAMD(event.end),
         cantidad: event.quantity,
+        valorTotalArriendo: event.valorTotalArriendo
       })),
     };
   
@@ -248,6 +250,8 @@ const ReservationsDetail = () => {
                     <span>{formatDateAMD(event.start)}</span>
                     <span className={styles.bold}>Fin:</span>
                     <span>{formatDateAMD(event.end)}</span>
+                    <span className={styles.bold}>Cantidad:</span>  
+                    <span>{event.quantity}</span>
                   </div>
                 </div>
               ))
@@ -255,10 +259,21 @@ const ReservationsDetail = () => {
               <div>No hay eventos para mostrar.</div>
             )}
             <Divider />
-            <div className={`${styles.detail} ${styles.total}`}>
-              <span className={styles.bold}>Total de juegos:</span>
-              <span>{totalEvents}</span>
-            </div>
+            
+            {user.events.length > 0 ? (
+              user.events.map((event, index) => (
+                <div className={styles.detail} key={index}>
+                  <span>Total:</span>
+                  <div className={styles.detailDate}>
+                    <span className={styles.bold}>${event.valorTotalArriendo}</span>  
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div>No hay eventos para mostrar.</div>
+            )}
+              
+           
             <div className={styles.buttonContainer}>
               <Link to={`/detalle/${user.events[0].gameid}`}>
                 <Button appearance="primary">Agregar más juegos</Button>
