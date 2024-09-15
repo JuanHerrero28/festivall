@@ -73,10 +73,10 @@
       "cantidad": 2,
       "img_urls": [
           "/assets/poolgames.jpeg",
-          "/assets/poolgames2.jpeg",
-          "/assets/poolgames3.jpeg",
-          "/assets/poolgames4.jpeg",
-          "/assets/poolgames5.jpeg"
+          "/assets/p.png",
+          "/assets/p2.jpeg",
+          "/assets/p3.webp",
+          "/assets/p4.jpeg"
       ],
       "tipo": {
           "title": "Juegos de Agua",
@@ -165,11 +165,11 @@
       "valorArriendo": 1000,
       "cantidad": 5,
       "img_urls": [
-          "/assets/soga_1.jpg",
-          "/assets/soga_2.jpg",
-          "/assets/soga_3.jpg",
-          "/assets/soga_4.jpg",
-          "/assets/soga_5.jpg"
+          "/assets/juegoinfantil1.jpeg",
+          "/assets/s.jpg",
+          "/assets/s2.jpeg",
+          "/assets/s3.jpeg",
+          "/assets/s4.jpeg"
       ],
       "tipo": {
           "title": "Juegos de Destreza",
