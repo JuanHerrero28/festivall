@@ -1,74 +1,59 @@
-const API_URL =
-  "https://sunny-exploration-production.up.railway.app/api/caracteristicas";
+import caracteristicasData from './caracteristicas.json';
 
-// Función para obtener todas las características
+// Obtener todas las características
 export const obtenerCaracteristicas = async () => {
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error("Error al obtener características");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error al obtener características:> ", error);
-    throw error;
-  }
-};
-
-// Función para crear una nueva característica
-export const crearCaracteristica = async (nombre) => {
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nombre }),
-    });
-    if (!response.ok) {
-      throw new Error("Error al crear la característica");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error al crear la característica:", error);
-    throw error;
-  }
-};
-
-// Función para actualizar una característica existente
-export const actualizarCaracteristica = async (id, nombre) => {
-  try {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nombre }),
-    });
-    if (!response.ok) {
-      throw new Error("Error al actualizar la característica");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error al actualizar la característica:", error);
-    throw error;
-  }
-};
-
-// Función para eliminar una característica existente
-// Eliminar un juego
-export const eliminarCaracteristica = async (id) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(caracteristicasData), 1000); // Simula un retraso de 1 segundo
   });
+};
 
-  if (!response.ok) {
-    throw new Error(`Error al eliminar la caracteristica con id ${id}`);
-  }
+// Agregar una nueva característica
+export const crearCaracteristica = async (nuevaCaracteristica) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      nuevaCaracteristica.id = caracteristicasData.length + 1; // Simula un ID autogenerado
+      caracteristicasData.push(nuevaCaracteristica);
+      resolve(nuevaCaracteristica);
+    }, 1000); // Simula un retraso de 1 segundo
+  });
+};
 
-  `Caracteristica con id ${id} eliminado.`;
-  return id;
+// Actualizar una característica existente
+export const actualizarCaracteristica = async (caracteristicaActualizada) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = caracteristicasData.findIndex(c => c.id === caracteristicaActualizada.id);
+      if (index !== -1) {
+        caracteristicasData[index] = caracteristicaActualizada;
+        resolve(caracteristicaActualizada);
+      } else {
+        reject(new Error('Característica no encontrada'));
+      }
+    }, 1000);
+  });
+};
+
+// Obtener una característica por ID
+export const obtenerCaracteristicaPorId = async (id) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const caracteristica = caracteristicasData.find(c => c.id === id);
+      resolve(caracteristica);
+    }, 1000); // Simula un retraso de 1 segundo
+  });
+};
+
+// Eliminar una característica
+export const eliminarCaracteristica = async (id) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = caracteristicasData.findIndex(c => c.id === id);
+      if (index !== -1) {
+        caracteristicasData.splice(index, 1);
+        resolve(id);
+      } else {
+        reject(new Error('Característica no encontrada'));
+      }
+    }, 1000); // Simula un retraso de 1 segundo
+  });
 };

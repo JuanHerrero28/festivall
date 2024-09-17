@@ -74,28 +74,39 @@ const AdminListCategorias = () => {
 
   const confirmDelete = async () => {
     try {
-      await eliminarCategoriaPorNombre(categoriaAEliminar.title);
+      await eliminarCategoriaPorNombre(categoriaAEliminar.id); // Cambia title por id
       setDatos((prevData) =>
-        prevData.filter((categoria) => categoria.title !== categoriaAEliminar.title)
+        prevData.filter((categoria) => categoria.id !== categoriaAEliminar.id) // Cambia title por id
       );
       toast.success("Categoría eliminada correctamente");
     } catch (error) {
       console.error("Error al eliminar la categoría:", error.message);
-      toast.error("No se puede eliminar la catgoria, la misma se encuentra asignada a un Juego");
+      toast.error("No se puede eliminar la categoría, la misma se encuentra asignada a un Juego");
     } finally {
       toggleDeleteModal();
     }
   };
 
   const handleUpdateCategory = (categoriaActualizada) => {
+    console.log("Datos de la categoría a actualizar:", categoriaActualizada); // Verifica el contenido del objeto
+  
+    if (!categoriaActualizada.id) {
+      console.error("El ID de la categoría está indefinido");
+      return;
+    }
+  
     setDatos((prevDatos) => {
       return prevDatos.map((categoria) =>
-        categoria.title === categoriaActualizada.title ? categoriaActualizada : categoria
+        categoria.id === categoriaActualizada.id ? categoriaActualizada : categoria
       );
     });
+  
     toggleEditModal();
     toast.success("Categoría actualizada correctamente");
   };
+  
+  
+  
 
   return (
     <ListContainer>

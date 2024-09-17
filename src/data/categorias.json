@@ -1,28 +1,34 @@
 [
-     {
-        "title": "Inflables y Castillos",
-        "description": "Juegos inflables para todas las edades",
-        "img_url": "../public/assets/inflables.jpg"
-      },
-    {
-      "titulo": "Agua",
-      "descripcion": "Juegos acuáticos para refrescarte.",
-      "imagen": "url_a_la_imagen_agua"
-    },
-    {
-      "titulo": "Mecánicos",
-      "descripcion": "Juegos mecánicos emocionantes.",
-      "imagen": "url_a_la_imagen_mecanicos"
-    },
-    {
-      "titulo": "Destreza",
-      "descripcion": "Juegos que desafían tu habilidad.",
-      "imagen": "url_a_la_imagen_destreza"
-    },
-    {
-      "titulo": "Niños",
-      "descripcion": "Juegos especialmente diseñados para niños.",
-      "imagen": "url_a_la_imagen_ninos"
-    }
-  ]
+  {
+    "id": 1,
+    "title": "Inflables y Castillos",
+    "description": "Juegos inflables para todas las edades",
+    "img_url": "../public/assets/inflables.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Juegos de Agua",
+    "description": "Juegos inflables para todas las edades",
+    "img_url": "../public/assets/inflables.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Niños Pequeños",
+    "description": "Juegos que desafían tus habilidades",
+    "img_url": "../public/assets/ninos.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Juegos de Destreza",
+    "description": "Juegos que desarrollan la creatividad",
+    "img_url": "../public/assets/destreza.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Juegos Mecánicos",
+    "description": "Juegos que desafían tus habilidades",
+    "img_url": "../public/assets/mecanico.jpg"
+  }
+]
+
   

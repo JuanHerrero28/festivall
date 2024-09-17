@@ -150,11 +150,13 @@ const RegistrarProducto = () => {
       setError('Ingrese un nombre para la nueva característica.');
       return;
     }
-
+  
+    const nuevaCaracteristicaObj = {
+      nombre: nuevaCaracteristica
+    };
+  
     try {
-      const caracteristicaCreada = await crearCaracteristica(
-        nuevaCaracteristica
-      );
+      const caracteristicaCreada = await crearCaracteristica(nuevaCaracteristicaObj);
       setCaracteristicas([...caracteristicas, caracteristicaCreada]);
       setNuevaCaracteristica('');
     } catch (error) {
@@ -162,6 +164,7 @@ const RegistrarProducto = () => {
       console.error('Error al crear la característica:', error);
     }
   };
+  
 
   return (
     <div className={styles.containerPrincipal}>

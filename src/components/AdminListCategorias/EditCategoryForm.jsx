@@ -68,19 +68,19 @@ const EditCategoryForm = ({ categoria, onSave }) => {
       setError('Por favor complete todos los campos.');
       return;
     }
-
+  
     const categoriaActualizada = {
       ...categoria,
       title,
       description,
       img_url,
     };
-
-    'Datos enviados para actualizar:', categoriaActualizada;
-
+  
+    console.log('Datos enviados para actualizar:', categoriaActualizada);
+  
     try {
-      await actualizarCategoria(categoria.title, categoriaActualizada);
-      onSave(categoriaActualizada);
+      await actualizarCategoria(categoriaActualizada);
+      onSave(categoriaActualizada);  // Actualiza la lista de categorías
     } catch (error) {
       setError(
         error.message || 'Error al actualizar la categoría. Inténtelo de nuevo.'
@@ -88,6 +88,7 @@ const EditCategoryForm = ({ categoria, onSave }) => {
       console.error('Error al actualizar la categoría:', error);
     }
   };
+  
 
   return (
     <div className={styles.containerPrincipal}>

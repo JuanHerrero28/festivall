@@ -90,10 +90,11 @@ const EditProductForm = ({ producto, onSave }) => {
         console.error("Error al obtener características", error);
       }
     };
-
+  
     fetchCategorias();
     fetchCaracteristicas();
   }, []);
+  
 
   useEffect(() => {
     if (producto) {
@@ -106,13 +107,15 @@ const EditProductForm = ({ producto, onSave }) => {
       setValorArriendo(producto.valorArriendo);
       setCantidad(producto.cantidad);
       setImgUrl(producto.img_url);
-      setCategoria(producto.tipo.id.toString());
+      setCategoria(producto.tipo ? producto.tipo.id.toString() : ""); // Maneja caso en que producto.tipo puede ser undefined
       setSelectedCaracteristicas(producto.caracteristicas.map((car) => car.id));
     }
   }, [producto]);
+  
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+  
     if (
       !nombre ||
       !descripcion ||
@@ -129,15 +132,24 @@ const EditProductForm = ({ producto, onSave }) => {
       setError("Por favor complete todos los campos.");
       return;
     }
-
+  
+    // Verifica si `categoria` y `categorias` están definidos
+    if (!categoria || !categorias) {
+      setError("Categoría o lista de categorías no están disponibles.");
+      return;
+    }
+  
+    // Encuentra la categoría seleccionada
     const categoriaSeleccionada = categorias.find(
       (cat) => cat.id.toString() === categoria
     );
+  
     if (!categoriaSeleccionada) {
       setError("Categoría seleccionada no es válida.");
       return;
     }
-
+  
+    // Asigna valores seguros o valores por defecto para propiedades opcionales
     const nuevoProducto = {
       id: producto.id,
       nombre,
@@ -151,19 +163,19 @@ const EditProductForm = ({ producto, onSave }) => {
       img_url,
       tipo: {
         id: categoriaSeleccionada.id,
-        title: categoriaSeleccionada.title,
-        description: categoriaSeleccionada.description,
-        img_url: categoriaSeleccionada.img_url,
+        title: categoriaSeleccionada.title || "Título desconocido", // Valor por defecto si `title` no está definido
+        description: categoriaSeleccionada.description || "", // Dejar vacío si `description` no está definido
+        img_url: categoriaSeleccionada.img_url || "", // Dejar vacío si `img_url` no está definido
       },
       caracteristicas: selectedCaracteristicas.map((id) => {
         const caracteristica = caracteristicas.find((car) => car.id === id);
         return {
           id: caracteristica.id,
-          nombre: caracteristica.nombre,
+          nombre: caracteristica.nombre || "Sin nombre", // Valor por defecto para nombre de característica
         };
       }),
     };
-
+  
     try {
       await actualizarProducto(nuevoProducto);
       onSave(nuevoProducto);
@@ -174,6 +186,8 @@ const EditProductForm = ({ producto, onSave }) => {
       console.error("Error al actualizar el producto:", error);
     }
   };
+  
+  
 
   const handleChangeNumericInput = (setter, value) => {
     const numericValue = parseFloat(value);
@@ -189,9 +203,7 @@ const EditProductForm = ({ producto, onSave }) => {
     }
 
     try {
-      const caracteristicaCreada = await crearCaracteristica(
-        nuevaCaracteristica
-      );
+      const caracteristicaCreada = await crearCaracteristica(nuevaCaracteristica);
       setCaracteristicas([...caracteristicas, caracteristicaCreada]);
       setNuevaCaracteristica("");
     } catch (error) {
@@ -282,27 +294,8 @@ const EditProductForm = ({ producto, onSave }) => {
                 />
               </div>
               <div className={styles.inputContainer}>
-                <label htmlFor="categoria" className={styles.label}>
-                  Categoría:
-                </label>
-                <InlineSelect
-                  id="categoria"
-                  value={categoria}
-                  onChange={(e) => setCategoria(e.target.value)}
-                  className={`${styles.input} ${styles.selectInput}`}
-                  required
-                >
-                  <option value="">Seleccione una categoría</option>
-                  {categorias.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.title}
-                    </option>
-                  ))}
-                </InlineSelect>
-              </div>
-              <div className={styles.inputContainer}>
                 <label htmlFor="capacidad" className={styles.label}>
-                  Capacidad:
+                  Capacidad (personas):
                 </label>
                 <InlineInput
                   type="number"
@@ -317,7 +310,7 @@ const EditProductForm = ({ producto, onSave }) => {
               </div>
               <div className={styles.inputContainer}>
                 <label htmlFor="valorArriendo" className={styles.label}>
-                  Valor Arriendo:
+                  Valor Arriendo ($):
                 </label>
                 <InlineInput
                   type="number"
@@ -347,7 +340,7 @@ const EditProductForm = ({ producto, onSave }) => {
               </div>
               <div className={styles.inputContainer}>
                 <label htmlFor="img_url" className={styles.label}>
-                  URL de la Imagen:
+                  URL de la imagen:
                 </label>
                 <InlineInput
                   type="text"
@@ -357,74 +350,83 @@ const EditProductForm = ({ producto, onSave }) => {
                   className={`${styles.input} ${styles.textInput}`}
                   required
                 />
-                {img_url && (
-                  <img
-                    src={img_url}
-                    alt="Imagen proporcionada"
-                    className={styles.imagePreview}
-                  />
-                )}
+              </div>
+              <div className={styles.inputContainer}>
+                <label htmlFor="categoria" className={styles.label}>
+                  Categoría:
+                </label>
+                <InlineSelect
+                  id="categoria"
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                  className={`${styles.input} ${styles.selectInput}`}
+                  required
+                >
+                  <option value="" disabled>
+                    Selecciona una categoría
+                  </option>
+                  {categorias.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.title}
+                    </option>
+                  ))}
+                </InlineSelect>
               </div>
             </div>
-            <div className={styles.inputContainer}>
-              <label htmlFor="nuevaCaracteristica" className={styles.label}>
-                Nueva Característica:
-              </label>
-              <InlineInput
-                type="text"
-                id="nuevaCaracteristica"
-                value={nuevaCaracteristica}
-                onChange={(e) => setNuevaCaracteristica(e.target.value)}
-                className={`${styles.input} ${styles.textInput}`}
-              />
-              <Button
-                appearance="primary"
-                type="button"
-                onClick={handleCrearCaracteristica}
-                className={styles.addButton}
-              >
-                Agregar
-              </Button>
-            </div>
-          </div>
-
-          <div className={styles.caracteristicasList}>
-            {caracteristicas.map((caracteristica) => (
-              <div
-                key={caracteristica.id}
-                className={styles.caracteristicaItem}
-              >
-                <div className={styles.checkboxContainer}>
-                  <input
-                    type="checkbox"
-                    id={`caracteristica-${caracteristica.id}`}
-                    checked={selectedCaracteristicas.includes(
-                      caracteristica.id
-                    )}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelectedCaracteristicas([
-                          ...selectedCaracteristicas,
-                          caracteristica.id,
-                        ]);
-                      } else {
-                        setSelectedCaracteristicas(
-                          selectedCaracteristicas.filter(
-                            (id) => id !== caracteristica.id
-                          )
-                        );
-                      }
-                    }}
-                  />
+            <div className={styles.caracteristicasSection}>
+              <h2>Características</h2>
+              <div className={styles.caracteristicasContainer}>
+                <div className={styles.caracteristicasList}>
+                  {caracteristicas.map((car) => (
+                    <div key={car.id} className={styles.caracteristicaItem}>
+                      <input
+                        type="checkbox"
+                        id={`car_${car.id}`}
+                        checked={selectedCaracteristicas.includes(car.id)}
+                        onChange={() => {
+                          if (selectedCaracteristicas.includes(car.id)) {
+                            setSelectedCaracteristicas(
+                              selectedCaracteristicas.filter(
+                                (id) => id !== car.id
+                              )
+                            );
+                          } else {
+                            setSelectedCaracteristicas([
+                              ...selectedCaracteristicas,
+                              car.id,
+                            ]);
+                          }
+                        }}
+                      />
+                      <label htmlFor={`car_${car.id}`}>{car.nombre}</label>
+                    </div>
+                  ))}
                 </div>
-                <div className={styles.labelContainer}>
-                  <label htmlFor={`caracteristica-${caracteristica.id}`}>
-                    {caracteristica.nombre}
+                <div className={styles.crearCaracteristica}>
+                  <label htmlFor="nuevaCaracteristica" className={styles.label}>
+                    Nueva característica:
                   </label>
+                  <InlineInput
+                    type="text"
+                    id="nuevaCaracteristica"
+                    value={nuevaCaracteristica}
+                    onChange={(e) => setNuevaCaracteristica(e.target.value)}
+                    className={`${styles.input} ${styles.textInput}`}
+                  />
+                  <Button
+                    onClick={handleCrearCaracteristica}
+                    appearance="primary"
+                    className={styles.boton}
+                  >
+                    Crear
+                  </Button>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
+          <Button type="submit" appearance="primary">
+            Guardar
+          </Button>
         </form>
       </div>
     </div>

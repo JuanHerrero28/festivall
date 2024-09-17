@@ -1,73 +1,65 @@
 // dataService.js
-const API_URL = "https://sunny-exploration-production.up.railway.app/api/category";
+import categoriasData from './categorias.json';
 
-export const  LeerCategorias = async () =>  {
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error("error", response.statusText);
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error("error", error);
-    throw error;
-  }
-}
+// Obtener todas las categorías
+export const LeerCategorias = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(categoriasData), 1000); // Simula un retraso de 1 segundo
+  });
+};
 
+// Agregar una nueva categoría
 export const agregarCategoria = async (nuevaCategoria) => {
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(nuevaCategoria),
-    });
-    if (!response.ok) {
-      throw new Error("Error al agregar la categoría");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      nuevaCategoria.id = categoriasData.length + 1; // Simula un ID autogenerado
+      categoriasData.push(nuevaCategoria);
+      resolve(nuevaCategoria);
+    }, 1000); // Simula un retraso de 1 segundo
+  });
+};
+
+export const actualizarCategoria = async (categoriaActualizada) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = categoriasData.findIndex(c => c.id === categoriaActualizada.id);
+      if (index !== -1) {
+        categoriasData[index] = categoriaActualizada;
+        resolve(categoriaActualizada);
+      } else {
+        reject(new Error('Categoría no encontrada'));
+      }
+    }, 1000);
+  });
 };
 
 
-export const eliminarCategoriaPorNombre = async (title) => {
-  try {
-    const response = await fetch(`${API_URL}/${title}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) {
-      throw new Error("Error al eliminar la categoría");
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+
+// Obtener una categoría por ID
+export const obtenerCategoriaPorId = async (id) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const categoria = categoriasData.find(c => c.id === id);
+      resolve(categoria);
+    }, 1000); // Simula un retraso de 1 segundo
+  });
 };
 
-
-export const actualizarCategoria = async (title, categoriaActualizada) => {
-  try {
-    const response = await fetch(`${API_URL}/${title}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(categoriaActualizada),
-    });
-    if (!response.ok) {
-      throw new Error("Error al actualizar la categoría");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+// Eliminar una categoría
+export const eliminarCategoriaPorNombre = async (id) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const index = categoriasData.findIndex(c => c.id === id);
+      if (index !== -1) {
+        categoriasData.splice(index, 1);
+        resolve(id);
+      } else {
+        throw new Error('Categoría no encontrada');
+      }
+    }, 1000); // Simula un retraso de 1 segundo
+  });
 };
+
 
 
 
