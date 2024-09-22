@@ -11,8 +11,10 @@ import {
   makeStyles,
 } from '@fluentui/react-components';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
-import { useAuth } from '../AuthContext/AuthContext'; // Importar el hook de autenticación
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate para redirigir
+import { useAuth } from '../AuthContext/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { cartCountAtom } from '../../data/Store/cartCountAtom';
 
 const useStyles = makeStyles({
   content: {
@@ -26,19 +28,21 @@ const DialogEvent = ({
   eventToEdit,
   setIsDialogOpen,
   handleDialogSubmit,
-  handleDeleteEvent, // Añadido aquí
+  handleDeleteEvent,
   isNewEvent,
   selectedGameId,
   selectedGameName,
   stock,
 }) => {
   const styles = useStyles();
-  const { isAuthenticated } = useAuth(); // Obtener si el usuario está autenticado
-  const navigate = useNavigate(); // Inicializar navigate para redirigir
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const [start, setStart] = React.useState(eventToEdit?.start || null);
   const [end, setEnd] = React.useState(eventToEdit?.end || null);
   const [quantity, setQuantity] = React.useState(eventToEdit?.quantity || 1);
+  const [cartCount, setCartCount] = useAtom(cartCountAtom); // Estado global del contador del carrito
+
   const Today = new Date();
   const minDate = new Date(Today.getFullYear(), Today.getMonth(), Today.getDate());
 
@@ -58,9 +62,7 @@ const DialogEvent = ({
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    // Verificar si el usuario está autenticado antes de permitir enviar el formulario
     if (!isAuthenticated) {
-      // Redirigir al usuario al login si no está autenticado
       navigate('/login');
       return;
     }
@@ -75,17 +77,26 @@ const DialogEvent = ({
     };
 
     handleDialogSubmit(newEvent);
+
+    // Incrementar el contador del carrito al agregar una nueva reserva
+    setCartCount(cartCount + quantity); // Sumar la cantidad seleccionada al carrito
   };
 
   const handleDelete = () => {
     if (!isAuthenticated) {
-      // Redirigir al usuario al login si no está autenticado
       navigate('/login');
       return;
     }
-
+  
     if (eventToEdit) {
+      // Restar la cantidad del evento que se está eliminando
+      const newCartCount = cartCount - eventToEdit.quantity;
+  
+      // Llamar a la función para eliminar el evento
       handleDeleteEvent(eventToEdit.id);
+  
+      // Actualizar el contador del carrito
+      setCartCount(Math.max(0, newCartCount)); // Asegúrate de que no sea menor que 0
     }
   };
 

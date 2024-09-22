@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { Button } from '@fluentui/react-components';
-import { ImSearch } from 'react-icons/im';
-import { useNavigate, Link } from 'react-router-dom';
-import styled from 'styled-components';
-import SignUpModal from '../Modal/SignUpModal';
-import MenuAvatar from './MenuAvatar';
-import SearchDrawer from '../Search/SearchDrawer';
-import { useAuth } from '../AuthContext/AuthContext';
-import { useAtom } from 'jotai';
-import { drawerOpenAtom } from '../../data/Store/drawerStore';
+import { useState } from "react";
+import { Button, CounterBadge } from "@fluentui/react-components";
+import { ImSearch } from "react-icons/im";
+import { useNavigate, Link } from "react-router-dom";
+import styled from "styled-components";
+import SignUpModal from "../Modal/SignUpModal";
+import MenuAvatar from "./MenuAvatar";
+import SearchDrawer from "../Search/SearchDrawer";
+import { useAuth } from "../AuthContext/AuthContext";
+import { useAtom } from "jotai";
+import { cartCountAtom } from "../../data/Store/cartCountAtom";
+import { drawerOpenAtom } from "../../data/Store/drawerStore";
 import { BsHandbag } from "react-icons/bs";
 
 const NavbarContainer = styled.nav`
@@ -76,13 +77,14 @@ const Navbar = ({ menuItems, logo }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const { isAuthenticated, user } = useAuth();
   const [open, setOpen] = useAtom(drawerOpenAtom);
+  const [cartCount] = useAtom(cartCountAtom);
 
   const redirectToHome = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const redirectToAdmin = () => {
-    navigate('/admin');
+    navigate("/admin");
   };
 
   const handleSignUpClick = () => {
@@ -90,11 +92,11 @@ const Navbar = ({ menuItems, logo }) => {
   };
 
   const handleLogin = () => {
-    navigate('/login'); // Redirige al usuario a la página de login
+    navigate("/login"); // Redirige al usuario a la página de login
   };
 
   // Leer el tipo de cuenta del localStorage
-  const isAdmin = localStorage.getItem('accountType') === 'ADMIN';
+  const isAdmin = localStorage.getItem("accountType") === "ADMIN";
 
   return (
     <>
@@ -102,8 +104,8 @@ const Navbar = ({ menuItems, logo }) => {
         <LeftSection>
           <img
             src={logo}
-            alt='Logo'
-            style={{ maxWidth: '100%', width: '200px' }}
+            alt="Logo"
+            style={{ maxWidth: "100%", width: "200px" }}
             onClick={redirectToHome}
           />
         </LeftSection>
@@ -117,10 +119,10 @@ const Navbar = ({ menuItems, logo }) => {
         </CenterSection>
         <RightSection>
           <Button
-            appearance='primary'
-            iconPosition='before'
+            appearance="primary"
+            iconPosition="before"
             onClick={() => setOpen(true)}
-            shape='circular'
+            shape="circular"
             icon={<ImSearch />}
           >
             Buscar
@@ -136,21 +138,24 @@ const Navbar = ({ menuItems, logo }) => {
             <BsHandbag
               style={{
                 fontSize: "20px",
-                color: "#795af6", // Color a ajustar según tus estilos
+                color: "#795af6",
                 cursor: "pointer",
               }}
-              onClick={() => {
-                console.log(
-                  "Icon clicked, redirecting to reservations detail page"
-                );
-                // Aquí podrías añadir más lógica si fuera necesario
-              }}
             />
+            {cartCount > 0 && (
+              <CounterBadge
+                count={cartCount}
+                size="small"
+                style={{
+                  position: "absolute",
+                  top: "-5px", // Ajusta según sea necesario
+                  right: "-10px", // Ajusta según sea necesario
+                }}
+              />
+            )}
           </Link>
           {isAuthenticated ? (
-            <>
-              <MenuAvatar user={user} />
-            </>
+            <MenuAvatar user={user} />
           ) : (
             <NavButton onClick={handleLogin}>LogIn</NavButton>
           )}

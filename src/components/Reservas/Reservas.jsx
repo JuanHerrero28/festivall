@@ -57,8 +57,8 @@ const Reservas = () => {
   }
 
   if (confirmedReservations.length === 0) {
-    return <div>No tienes reservas confirmadas.</div>;
-  }
+    return <div className={Styles.noReservas}>No tienes reservas confirmadas.</div>;
+}
 
   return (
     <div className={Styles.granContenedor}>

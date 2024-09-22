@@ -129,7 +129,7 @@ const AdminListProd = () => {
                 <ListCell>{producto.tipo?.title || 'N/A'}</ListCell>
                 <ListCell>
                   <img
-                    src={producto.img_url}
+                    src={producto.img_urls[0]}
                     alt='imagen'
                     style={{
                       width: '50px',

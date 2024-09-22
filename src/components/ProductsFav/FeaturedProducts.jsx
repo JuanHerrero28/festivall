@@ -110,6 +110,7 @@ const CardFeatured = ({ product }) => {
   return (
     <Card className={styles.productCard}>
       <CardPreview>
+      {/* accedo a la posicion 0 img_urls[0] */}
         <img src={product.img_urls[0]} alt={product.nombre} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
       </CardPreview>
       <CardHeader
@@ -129,6 +130,7 @@ const CardFeatured = ({ product }) => {
         </PopoverTrigger>
         <PopoverSurface tabIndex={-1}>
           <ShareSocial imageUrl={product.img_urls[0]} />
+          {/* accedo a la posicion 0 img_url} */}
         </PopoverSurface>
       </Popover>
     </Card>

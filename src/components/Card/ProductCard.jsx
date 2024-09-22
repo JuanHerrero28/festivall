@@ -26,6 +26,12 @@ const CardContainer = styled.div`
   overflow: hidden;
   border: 8px solid white;
   position: relative;
+
+  @media (max-width: 414px) { /* Ajuste para iPhone XR */
+    width: 360px;
+    height: 240px;
+  }
+
   @media (max-width: 768px) {
     width: 500px;
     height: 220px;
@@ -61,6 +67,11 @@ const ImageWrapper = styled.div`
 
   &:hover:before {
     opacity: 0; /* Elimina el filtro al pasar el cursor */
+  }
+
+  @media (max-width: 414px) {
+    width: 180px;
+    height: 180px; /* Ajuste para el tamaño del iPhone XR */
   }
 
   @media (max-width: 768px) {
@@ -151,6 +162,14 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 
+  @media (max-width: 414px) {
+    bottom: 10px; /* Ajuste para iPhone XR */
+    left: 75%;
+    transform: translateX(-50%);
+    width: auto;
+  }
+
+
   @media (max-width: 768px) {
     bottom: 12px; /* Ajusta la distancia desde el borde inferior */
     left: 80%;
@@ -185,7 +204,7 @@ const ProductCard = ({ product }) => {
     return <div>No hay información del producto</div>;
   }
 
-  const { id, nombre, img_urls, promedioValoracion } = product;
+  const { id, nombre, img_urls, promedioValoracion } = product; //img_urls para mas imagenes 
 
   const navigate = useNavigate();
   const setJuegoId = useRatingStore((state) => state.setJuegoId);
@@ -195,12 +214,13 @@ const ProductCard = ({ product }) => {
   };
 
   const averageRating = promedioValoracion;
-
+// accedo a la posicion 0 img_urls[0]
   return (
     <>
       <CardContainer>
         <ImageWrapper>
           <img src={img_urls[0]} alt={nombre} />
+          
         </ImageWrapper>
         <TextContainer>
           <Title>{nombre}</Title>
@@ -221,6 +241,7 @@ const ProductCard = ({ product }) => {
           </PopoverTrigger>
           <PopoverSurface tabIndex={-1}>
             <ShareSocial imageUrl={img_urls[0]} />
+            {/* accedo a la posicion 0 img_urls[0] */}
           </PopoverSurface>
         </Popover>
         <FavoriteIconWrapper onClick={toggleFavorite}>

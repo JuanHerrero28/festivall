@@ -4,6 +4,7 @@ import { calendarEventsAtom } from '../../data/Store/eventStore';
 import { userAtom } from '../../data/Store/userAtom';
 import { useAtom } from 'jotai';
 import moment from 'moment';
+/* import { obtenerProductos } from '../../data/juegos'; */
 import juegos from '../../data/juegos.json';
 import DialogEvent from './DialogEvent';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -19,6 +20,7 @@ const Scheduler = ({ selectedGameId, selectedGameName, selectedCantidad, onEvent
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [user] = useAtom(userAtom);
   const [calendarEvents, setCalendarEvents] = useAtom(calendarEventsAtom);
+
 
   useEffect(() => {
     console.log('Calendar events atom state:', calendarEvents); // Verifica el estado del atom
