@@ -308,7 +308,127 @@
           "Colorido"
       ],
       "promedioValoracion": 4.7
-  }
+  },
+  {
+    "id": 11,
+    "nombre": "Paintball",
+    "descripcion": "Disfruta de una emocionante batalla de paintball con amigos.",
+    "largo": 30,
+    "ancho": 20,
+    "altura": 5,
+    "capacidad": 10,
+    "valorArriendo": 3000,
+    "cantidad": 5,
+    "img_urls": [
+        "/assets/pa1.jpg",
+        "/assets/pa2.jpg",
+       "/assets/pa3.jpg",
+       "/assets/pa4.jpg",
+       "/assets/pa5.jpg"
+    ],
+   "tipo": {
+          "title": "Juegos de Destreza",
+          "description": "Juegos que desafían tus habilidades",
+          "img_url": "../public/assets/destreza.jpg"
+      },
+    "caracteristicas": [
+        "Estrategia en equipo",
+        "Aventura al aire libre",
+        "Seguridad garantizada",
+        "Diversión asegurada"
+    ],
+    "promedioValoracion": 4.8
+},
+{
+    "id": 12,
+    "nombre": "Arco y Flecha",
+    "descripcion": "Pone a prueba tu puntería y concentración en el tiro con arco.",
+    "largo": 20,
+    "ancho": 15,
+    "altura": 3,
+    "capacidad": 4,
+    "valorArriendo": 2000,
+    "cantidad": 4,
+    "img_urls": [
+        "/assets/ar1.jpg",
+        "/assets/ar2.jpg",
+        "/assets/ar3.jpg",
+        "/assets/ar4.jpg",
+        "/assets/ar5.jpg"
+    ],
+  "tipo": {
+          "title": "Juegos de Destreza",
+          "description": "Juegos que desafían tus habilidades",
+          "img_url": "../public/assets/destreza.jpg"
+      },
+    "caracteristicas": [
+        "Desafiante",
+        "Ideal para todas las edades",
+        "Mejora la concentración",
+        "Equipamiento seguro"
+    ],
+    "promedioValoracion": 4.6
+},
+{
+    "id": 13,
+    "nombre": "Circuito de Aventura",
+    "descripcion": "Un emocionante circuito lleno de obstáculos y desafíos.",
+    "largo": 40,
+    "ancho": 20,
+    "altura": 6,
+    "capacidad": 8,
+    "valorArriendo": 3500,
+    "cantidad": 3,
+    "img_urls": [
+        "/assets/ci1.jpg",
+        "/assets/ci2.jpg",
+        "/assets/ci3.jpg",
+        "/assets/ci4.jpg",
+        "/assets/ci5.jpg"
+    ],
+    "tipo": {
+        "title": "Juegos de Destreza",
+        "description": "Juegos que desafían tus habilidades",
+        "img_url": "../public/assets/destreza.jpg"
+    },
+    "caracteristicas": [
+        "Ideal para grupos",
+        "Fomenta la competencia",
+        "Mejora la agilidad",
+        "Diversión a cada paso"
+    ],
+    "promedioValoracion": 4.9
+},
+{
+    "id": 14,
+    "nombre": "Tiro al Blanco",
+    "descripcion": "Muestra tu puntería en este emocionante juego de tiro.",
+    "largo": 15,
+    "ancho": 10,
+    "altura": 3,
+    "capacidad": 5,
+    "valorArriendo": 2200,
+    "cantidad": 4,
+    "img_urls": [
+        "/assets/ti1.jpg",
+        "/assets/ti2.jpg",
+        "/assets/ti3.jpg",
+        "/assets/ti4.jpg",
+        "/assets/ti5.jpg"
+    ],
+    "tipo": {
+        "title": "Juegos de Destreza",
+        "description": "Juegos que desafían tus habilidades",
+        "img_url": "../public/assets/destreza.jpg"
+    },
+    "caracteristicas": [
+        "Desafiante",
+        "Ideal para competencias",
+        "Diversión en equipo",
+        "Fomenta la concentración"
+    ],
+    "promedioValoracion": 4.7
+}
     
   ]
 
